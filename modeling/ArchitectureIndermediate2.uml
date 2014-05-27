@@ -1,0 +1,42 @@
+@startuml
+
+cloud {
+  () "REST API" as TwitterAPI
+  [Twitter] - TwitterAPI   
+}
+
+
+package "Call Center" {
+  node "Front-end" {
+	  [Operator Workstation]
+  }
+  
+  node "Back-end" {
+	  [Message Processor]
+	} 
+}
+ 
+database "Database" {
+
+  folder "Current" {
+     frame "Locations" {
+     }
+     
+     frame "Orders" {
+     }
+  }
+}
+
+:Driver: <--> [Twitter]
+:Customer: <--> [Twitter]
+:Operator: --> [Operator Workstation]
+Locations --> [Operator Workstation]
+[Operator Workstation] --> [Message Processor]
+TwitterAPI <--> [Message Processor]
+[Message Processor] --> Orders
+[Message Processor] --> Locations
+:Driver: <--> :Operator:
+:Customer: <--> :Operator:
+
+
+@enduml

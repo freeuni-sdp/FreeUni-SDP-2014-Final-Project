@@ -1,0 +1,20 @@
+@startuml
+
+:Passenger:
+:Driver:
+:Operator:
+:Manager:
+
+left to right direction
+
+  Passenger -down-- (order)
+  Operator -up-- (order)
+  Operator -up-- (arrange)
+  Driver -down-- (arrange)
+  Driver -- (deliver)
+  Passenger -- (deliver)
+  Manager -up-- (plan)
+  Driver -down-- (plan)
+  Operator -- (plan)
+
+@enduml

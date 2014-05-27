@@ -1,0 +1,22 @@
+@startuml
+
+package "Call Center" {
+  node "Front-end" {
+	  [Operator Workstation]
+  }
+}
+ 
+database "Database" {
+
+  folder "Current" {
+     frame "Locations" {
+     }
+  }
+}
+
+:Driver: <--> :Operator:
+:Customer: <--> :Operator:
+:Operator: --> [Operator Workstation]
+[Operator Workstation] --> Locations
+
+@enduml

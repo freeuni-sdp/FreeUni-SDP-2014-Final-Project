@@ -1,0 +1,60 @@
+@startuml
+
+[Driver app]
+[Passenger app]
+[Passenger web site]
+
+package "Call center" {
+  node "Front-end" {
+	  [Operator workstation]
+	  [Manager workstation]
+  }
+  
+  node "Back-end" {
+	  [Order entry]
+	  [Location entry]
+	  [Location query]
+	  [Message processor]
+	  [Business intelligence]
+	} 
+	
+	node "Infrastructure" {
+	  [User management]
+	  [Driver management]
+  }
+}
+ 
+
+cloud {
+  () "REST API" as TwitterAPI
+  TwitterAPI -- [Twitter]   
+  
+  () "REST API" as CalendarAPI
+  CalendarAPI -- [Google Calendar]
+}
+
+database "Database" {
+  folder "Master data" {
+     frame "Drivers" {
+     }
+     
+     frame "Users" {
+     }
+  }
+
+  folder "Current" {
+     frame "Locations" {
+     }
+     
+     frame "Orders" {
+     }
+  }
+
+  folder "History" {
+     frame "Transactions" {
+     }
+  }
+}
+
+
+@enduml

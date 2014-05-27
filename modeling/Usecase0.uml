@@ -1,0 +1,17 @@
+@startuml
+
+
+:Passenger:
+:Driver:
+:Operator:
+
+left to right direction
+
+  Passenger -- (1. Ordering taxi) : (1) name time\nand location
+  Operator -- (1. Ordering taxi) : (2) receive and record
+  Operator -- (2. Finding available driver) : (3) ask for\nlocation
+  Driver -up-- (2. Finding available driver) : (4) report\nlocation
+  Driver -up-- (3. Driving) : (5) pick-up and deliver
+  Passenger -- (3. Driving) : (6) pay
+
+@enduml
