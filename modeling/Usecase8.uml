@@ -1,0 +1,16 @@
+@startuml
+
+
+:Manager:
+:Product:
+
+left to right direction
+
+  Manager -- (1. Previous Diagram) : (1) enters diagram's\n page
+  Product -up-- (1. Previous Diagram) : (1) collects all information\n from database 
+  Manager -- (2. Select region) : (2) selects region
+  Product -up-- (2. Select region) : (2) collects info\n about Drivers
+  Manager -- (3. Add/Remove Driver) : (4) removes/adds driver\n from region
+  Product -up-- (3. Add/Remove Driver) : (3) analyze info\n about drivers 
+
+@enduml
