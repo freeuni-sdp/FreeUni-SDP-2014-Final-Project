@@ -11,6 +11,7 @@
 		<module>model</module>
 		<module>server</module>
 		<module>console</module>
+        <module>twitter</module>
 	</modules>
 
 	<developers>
@@ -20,6 +21,9 @@
 		<developer>
 			<name>Zura Gventsadze</name>
 		</developer>
+        <developer>
+            <name>Sandro Dolidze</name>
+        </developer>
 	</developers>
 
 	<build>
