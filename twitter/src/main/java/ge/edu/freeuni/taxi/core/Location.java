@@ -1,4 +1,4 @@
-package ge.edu.freeuni.taxi.twitter;
+package ge.edu.freeuni.taxi.core;
 
 /**
  * @author Sandro Dolidze
@@ -20,5 +20,10 @@ public class Location {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + latitude + "," + longitude + ")";
     }
 }
