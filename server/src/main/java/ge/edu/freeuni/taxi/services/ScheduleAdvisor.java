@@ -1,11 +1,10 @@
 package ge.edu.freeuni.taxi.services;
 
-
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.SchedulingAdvice;
 import ge.edu.freeuni.taxi.manager.OrderManager;
-import ge.edu.freeuni.taxi.managers.DistrictManager;
-import ge.edu.freeuni.taxi.managers.DriversManager;
+import ge.edu.freeuni.taxi.manager.DistrictManager;
+import ge.edu.freeuni.taxi.manager.DriversManager;
 import ge.edu.freeuni.taxi.map.District;
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class ScheduleAdvisor {
 		int allOrders = 0;
 		for (District district : districtManager.getAllDistricts()) {
 
-			// TODO filter last day orders
+			// TODO - decide which time period of orders to include
 			List<PassengerOrder> ordersByDistrict = orderManager.filterOrders(null, null, district.getId());
 			allOrders += ordersByDistrict.size();
 			ordersByArea.put(district, ordersByDistrict);
@@ -43,9 +42,9 @@ public class ScheduleAdvisor {
 		return advice;
 	}
 
-	private Integer getCalculatedNumOfDrivers(int allOrdersSize, int ordersByDistrictSize) {
-		int allDriversSize = DriversManager.getInstance().getAllDrivers().size();
+	private int getCalculatedNumOfDrivers(double allOrdersSize, double ordersByDistrictSize) {
+		double allDriversSize = DriversManager.getInstance().getAllDrivers().size();
 
-		return allDriversSize*(ordersByDistrictSize/allOrdersSize);
+		return new Double(allDriversSize*ordersByDistrictSize/allOrdersSize).intValue();
 	}
 }

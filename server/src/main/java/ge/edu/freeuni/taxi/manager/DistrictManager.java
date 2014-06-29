@@ -1,4 +1,4 @@
-package ge.edu.freeuni.taxi.managers;
+package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.map.District;
 

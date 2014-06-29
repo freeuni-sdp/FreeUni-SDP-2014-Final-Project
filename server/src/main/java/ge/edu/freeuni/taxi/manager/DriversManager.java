@@ -1,4 +1,4 @@
-package ge.edu.freeuni.taxi.managers;
+package ge.edu.freeuni.taxi.manager;
 
 import java.util.ArrayList;
 import java.util.List;
