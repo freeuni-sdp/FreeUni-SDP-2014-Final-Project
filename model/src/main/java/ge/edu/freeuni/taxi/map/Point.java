@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Point {
-
+	
 	private long longitude;
 
 	private long latitude;
