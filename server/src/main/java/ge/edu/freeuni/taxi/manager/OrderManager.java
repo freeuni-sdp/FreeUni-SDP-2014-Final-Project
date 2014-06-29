@@ -4,8 +4,11 @@ import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderManager {
 
@@ -53,13 +56,40 @@ public class OrderManager {
 	}
 
 	/**
-	 *	filters orders by createDate
+	 *	filters orders by createDate and district
+	 *
 	 * @param fromDate date from
 	 * @param toDate date to
+	 * @param districtId id of district
 	 * @return orders
 	 */
-	public List<PassengerOrder> getOrdersByDate(Date fromDate, Date toDate) {
-		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.createTime > :fromDate AND o.createTime < :toDate", PassengerOrder.class)
-				.setParameter("fromDate", fromDate).setParameter("toDate", toDate).getResultList();
+	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, Long districtId) {
+
+		StringBuilder ql = new StringBuilder("FROM FROM PassengerOrder o WHERE 1=1");
+		Map<String, Object> params = new HashMap<>();
+
+		if (fromDate != null) {
+			ql.append(" AND o.createTime > :fromDate");
+			params.put("fromDate", fromDate);
+		}
+
+		if (toDate != null) {
+			ql.append(" AND o.createTime < :toDate");
+			params.put("toDate", toDate);
+		}
+
+		//noinspection StatementWithEmptyBody
+		if (districtId != null) {
+			// TODO implement, when exists connection between PassengerOrder and District
+		}
+
+		Query query = em.createQuery("SELECT o " + ql.toString(), PassengerOrder.class);
+
+		for (String key : params.keySet()) {
+			query.setParameter(key, params.get(key));
+		}
+
+		//noinspection unchecked
+		return query.getResultList();
 	}
 }
