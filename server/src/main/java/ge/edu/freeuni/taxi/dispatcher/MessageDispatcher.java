@@ -9,24 +9,23 @@ import ge.edu.freeuni.taxi.core.Message;
 import ge.edu.freeuni.taxi.core.MessageListener;
 import ge.edu.freeuni.taxi.core.MessageProcessor;
 import ge.edu.freeuni.taxi.core.MessageType;
-import ge.edu.freeuni.taxi.managers.MessageManager;
 
 public class MessageDispatcher implements MessageListener{
 	private List<MessageProcessor> messageProcessors;
-	private Map<MessageType, List<MessageManager>> messageManagers;
+	private Map<MessageType, List<IncomingMessageListener>> incomingMessageListeners;
 	
 	public MessageDispatcher() {
 		messageProcessors = new ArrayList<>();
-		messageManagers = new HashMap<>();
+		incomingMessageListeners = new HashMap<>();
 	}
 	
-	public void registerManagerOnMessageType(MessageType messageType, MessageManager messageManager) {
-		if (messageManagers.containsKey(messageType)) {
-			messageManagers.get(messageType).add(messageManager);
+	public void registerManagerOnMessageType(MessageType messageType, IncomingMessageListener incomingMessageListener) {
+		if (incomingMessageListeners.containsKey(messageType)) {
+			incomingMessageListeners.get(messageType).add(incomingMessageListener);
 		} else {
-			List<MessageManager> list = new ArrayList<>();
-			list.add(messageManager);
-			messageManagers.put(messageType, list);
+			List<IncomingMessageListener> list = new ArrayList<>();
+			list.add(incomingMessageListener);
+			incomingMessageListeners.put(messageType, list);
 		}
 	}
 
@@ -46,8 +45,8 @@ public class MessageDispatcher implements MessageListener{
 
 	@Override
 	public void onMessage(Message message) {
-		for (MessageManager manager : messageManagers.get(message.getMessageType())) {
-			System.out.println(manager.toString() + " will serve on message type " + message.getMessageType());
+		for (IncomingMessageListener incomingMessageListener : incomingMessageListeners.get(message.getMessageType())) {
+			incomingMessageListener.onIncomingMessage(message);
 		}
 	}
 }
