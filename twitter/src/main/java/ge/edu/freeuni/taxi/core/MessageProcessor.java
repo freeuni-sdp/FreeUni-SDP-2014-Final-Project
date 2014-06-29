@@ -38,4 +38,7 @@ public abstract class MessageProcessor {
     }
 
     public abstract void sendOutgoingMessage(Message message);
+
+	public abstract void listenToStream();
+
 }

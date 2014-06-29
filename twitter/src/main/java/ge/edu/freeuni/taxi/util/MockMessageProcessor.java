@@ -56,4 +56,7 @@ public class MockMessageProcessor extends MessageProcessor {
             outgoingMessageListener.onMessage(message);
         }
     }
+
+	@Override
+	public void listenToStream() {}
 }

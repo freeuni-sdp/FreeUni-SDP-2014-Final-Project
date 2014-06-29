@@ -29,7 +29,8 @@ public class TwitterMessageProcessor extends MessageProcessor {
 
     private final Twitter twitter;
     private final TwitterMessageConverter twitterMessageConverter;
-
+    private final TwitterStream twitterStream;
+    
     public static TwitterMessageProcessor getInstance() {
         return new TwitterMessageProcessor(
             new TwitterFactory().getInstance(),
@@ -41,7 +42,7 @@ public class TwitterMessageProcessor extends MessageProcessor {
     private TwitterMessageProcessor(Twitter twitter,
                                     TwitterStream twitterStream,
                                     TwitterMessageConverter twitterMessageConverter) {
-        listenToTwitterStream(twitterStream);
+        this.twitterStream = twitterStream;
         this.twitter = twitter;
         this.twitterMessageConverter = twitterMessageConverter;
     }
@@ -73,7 +74,8 @@ public class TwitterMessageProcessor extends MessageProcessor {
         return statusUpdate;
     }
 
-    private void listenToTwitterStream(TwitterStream twitterStream) {
+    @Override
+    public void listenToStream() {
         twitterStream.addListener(statusListener);
 
         FilterQuery query = new FilterQuery();

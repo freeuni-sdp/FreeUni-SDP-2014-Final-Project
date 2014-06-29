@@ -21,5 +21,10 @@
 			<artifactId>model</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>freeuni-taxi</groupId>
+			<artifactId>twitter</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

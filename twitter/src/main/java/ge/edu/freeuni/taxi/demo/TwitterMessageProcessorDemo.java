@@ -17,7 +17,7 @@ public class TwitterMessageProcessorDemo {
 
     public static void testTwitter() {
         final TwitterMessageProcessor twitterMessageProcessor = TwitterMessageProcessor.getInstance();
-
+        twitterMessageProcessor.listenToStream();
         twitterMessageProcessor.addIncomingMessageListener(new MessageListener() {
             public void onMessage(Message message) {
                 System.out.println("incoming: " + message);
