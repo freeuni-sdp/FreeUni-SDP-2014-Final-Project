@@ -6,10 +6,12 @@
     http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
     version="1.0">
     <persistence-unit name="freeuni_taxi">
+
 		<class>ge.edu.freeuni.taxi.User</class>
-		<class>ge.edu.freeuni.taxi.Order</class>
+		<class>ge.edu.freeuni.taxi.PassengerOrder</class>
 		<class>ge.edu.freeuni.taxi.Passenger</class>
 		<class>ge.edu.freeuni.taxi.map.District</class>
+
         <properties>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="1234"/>

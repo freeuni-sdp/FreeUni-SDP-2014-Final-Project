@@ -6,9 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Order implements Serializable {
+public class PassengerOrder implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +17,8 @@ public class Order implements Serializable {
 
 	@OneToOne
 	private Passenger passenger;
+
+	private Date createTime;
 
 	public Long getId() {
 		return id;
@@ -31,5 +34,13 @@ public class Order implements Serializable {
 
 	public void setPassenger(Passenger passenger) {
 		this.passenger = passenger;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }
