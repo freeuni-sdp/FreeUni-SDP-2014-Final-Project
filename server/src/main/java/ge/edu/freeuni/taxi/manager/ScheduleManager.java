@@ -1,17 +1,16 @@
 package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.DriversDuty;
-import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.mysql.jdbc.Driver;
 
@@ -21,6 +20,9 @@ public class ScheduleManager {
 
 	private EntityManager em;
 
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+	
 	public static ScheduleManager getInstance() {
 		if (instance == null) {
 			instance = new ScheduleManager();
@@ -49,12 +51,24 @@ public class ScheduleManager {
 		}
 		
 		setWorkingState(driversDuty);
+		setLastWorkingDate(driversDuty);
 		
 		return drivers;
 
 	}
 	
 	
+	private void setLastWorkingDate(List<DriversDuty> driversDuties) {
+		for(int i = 0; i < driversDuties.size(); i++){
+			DriversDuty curr = driversDuties.get(i);
+			
+			curr.setLastWorkingDate(StringToLong(sdf.format(new Date())));
+			em.getTransaction().begin();
+			em.merge(curr);
+			em.getTransaction().commit();
+		}
+	}
+
 	private void setWorkingState(List<DriversDuty> driversDuties){
 		List<DriversDuty> workingDrivers = em.createQuery("SELECT * FROM DriversDuty WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
 		
@@ -79,4 +93,26 @@ public class ScheduleManager {
 		
 		
 	}
+	
+	
+	
+	public long StringToLong(String dateString){
+		SimpleDateFormat format = sdf;
+		
+		try {
+			return  format.parse(dateString).getTime();
+			
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+			return -1;
+		}
+
+	}
+	
+	public String LongToString(long dateLong){
+		
+		return sdf.format(new Date(dateLong));
+	}
+
 }

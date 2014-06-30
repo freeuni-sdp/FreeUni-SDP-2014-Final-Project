@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 public class DriversDuty implements Serializable{
 
 	private long driversID;
-	private Date lastWorkingDate;
+	private long lastWorkingDate;
 	private int isWorkingNow;
 	
 	public DriversDuty() {
@@ -17,11 +17,11 @@ public class DriversDuty implements Serializable{
 	}
 	
 	
-	public Date getLastWorkingDate() {
+	public long getLastWorkingDate() {
 		return lastWorkingDate;
 	}
 
-	public void setLastWorkingDate(Date lastWorkingDate) {
+	public void setLastWorkingDate(long lastWorkingDate) {
 		this.lastWorkingDate = lastWorkingDate;
 	}
 
