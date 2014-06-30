@@ -4,8 +4,6 @@ import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.DriversDuty;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
-import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class ScheduleManager {
 	
 
 	private void fillDriversDutyDB(){
-		List<Driver> allDrivers = em.createQuery("SELECT o FROM Driver ", Driver.class).getResultList();
+		List<Driver> allDrivers = em.createQuery("SELECT o FROM Driver o", Driver.class).getResultList();
 		for(int i = 0; i < allDrivers.size(); i++){
 			DriversDuty newOne = new DriversDuty();
 			newOne.setDriversID(allDrivers.get(i).getDriversID());
@@ -53,10 +51,7 @@ public class ScheduleManager {
 	 */
 	public List<Driver> getWorkingDrivers(int num) {
 		
-		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
-		
-	//	List<DriversDuty> driversDuty2 = em.createQuery("SELECT * FROM DriversDuty ORDER BY lastWorkingDate LIMIT " + num, DriversDuty.class).getResultList();
-
+		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty o ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
 		List<Driver> drivers = new ArrayList<>();
 		for(int i = 0; i < driversDuty.size(); i++){
 			drivers.add(em.find(Driver.class, driversDuty.get(i).getDriversID()));
@@ -82,7 +77,7 @@ public class ScheduleManager {
 	}
 
 	private void setWorkingState(List<DriversDuty> driversDuties){
-		List<DriversDuty> workingDrivers = em.createQuery("SELECT o FROM DriversDuty WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
+		List<DriversDuty> workingDrivers = em.createQuery("SELECT o FROM DriversDuty o WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
 		
 		for(int i = 0; i < workingDrivers.size(); i++){
 			DriversDuty curr = workingDrivers.get(i);
@@ -101,8 +96,6 @@ public class ScheduleManager {
 			em.merge(curr);
 			em.getTransaction().commit();
 		}
-		
-		
 		
 	}
 	
