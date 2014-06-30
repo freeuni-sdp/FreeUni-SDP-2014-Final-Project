@@ -1,5 +1,6 @@
 package ge.edu.freeuni.taxi.manager;
 
+import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.DriversDuty;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
@@ -13,7 +14,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import com.mysql.jdbc.Driver;
 
 public class ScheduleManager {
 
@@ -33,7 +33,7 @@ public class ScheduleManager {
 
 	private ScheduleManager() {
 		em = EMFactory.createEM();
-		//fillDriversDutyDB();
+		fillDriversDutyDB();
 	}
 
 	
@@ -42,8 +42,7 @@ public class ScheduleManager {
 		List<Driver> allDrivers = em.createQuery("SELECT o FROM Driver ", Driver.class).getResultList();
 		for(int i = 0; i < allDrivers.size(); i++){
 			DriversDuty newOne = new DriversDuty();
-			
-//			newOne.setDriversID(allDrivers.get(i).getDriversID);
+			newOne.setDriversID(allDrivers.get(i).getDriversID());
 			newOne.setIsWorkingNow(0);
 			newOne.setLastWorkingDate(0);
 		}
