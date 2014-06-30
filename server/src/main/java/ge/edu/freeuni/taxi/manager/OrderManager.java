@@ -1,10 +1,12 @@
 package ge.edu.freeuni.taxi.manager;
 
+import ge.edu.freeuni.taxi.Passenger;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +56,19 @@ public class OrderManager {
 	public List<PassengerOrder> getOrders() {
 		return em.createQuery("SELECT o FROM PassengerOrder o", PassengerOrder.class).getResultList();
 	}
-
+	
+	
+	public void deleteOrder(long id){
+		
+		List<PassengerOrder> orders = getOrders();
+		for (PassengerOrder passengerOrder : orders) {
+			if(passengerOrder.getId() == id){
+				em.remove(passengerOrder);
+				break;
+			}
+		}
+	}
+	
 	/**
 	 *	filters orders by createDate and district
 	 *
