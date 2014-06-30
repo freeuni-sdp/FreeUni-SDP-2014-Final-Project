@@ -47,7 +47,36 @@ public class ScheduleManager {
 		for(int i = 0; i < driversDuty.size(); i++){
 			drivers.add(em.find(Driver.class, driversDuty.get(i).getDriversID()));
 		}
+		
+		setWorkingState(driversDuty);
+		
 		return drivers;
 
+	}
+	
+	
+	private void setWorkingState(List<DriversDuty> driversDuties){
+		List<DriversDuty> workingDrivers = em.createQuery("SELECT * FROM DriversDuty WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
+		
+		for(int i = 0; i < workingDrivers.size(); i++){
+			DriversDuty curr = workingDrivers.get(i);
+			curr.setIsWorkingNow(0);
+			em.getTransaction().begin();
+			em.merge(curr);
+			em.getTransaction().commit();
+		}
+		
+		
+		
+		for(int i = 0; i < driversDuties.size(); i++){
+			DriversDuty curr = driversDuties.get(i);
+			curr.setIsWorkingNow(1);
+			em.getTransaction().begin();
+			em.merge(curr);
+			em.getTransaction().commit();
+		}
+		
+		
+		
 	}
 }
