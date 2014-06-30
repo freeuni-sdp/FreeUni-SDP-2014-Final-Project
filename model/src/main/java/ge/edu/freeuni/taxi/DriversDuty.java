@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class DriversDuty implements Serializable{
 
-	private long driversID;
+	@Id
+	private String driversID;
+	
 	private long lastWorkingDate;
 	private int isWorkingNow;
 	
@@ -34,11 +37,11 @@ public class DriversDuty implements Serializable{
 	}
 
 	
-	public long getDriversID() {
+	public String getDriversID() {
 		return driversID;
 	}
 
-	public void setDriversID(long driversID) {
+	public void setDriversID(String driversID) {
 		this.driversID = driversID;
 	}
 }

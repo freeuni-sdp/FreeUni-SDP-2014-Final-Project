@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 public class Driver implements Serializable{
 	
 	private long id;
+	private String driversID;
 	
 	public Driver() {}
 	
@@ -32,5 +33,13 @@ public class Driver implements Serializable{
 	
 	public void addLocation(Location location) {
 		locations.add(location);
+	}
+
+	public String getDriversID() {
+		return driversID;
+	}
+
+	public void setDriversID(String driversID) {
+		this.driversID = driversID;
 	}
 }

@@ -3,6 +3,7 @@ package ge.edu.freeuni.taxi.manager;
 import ge.edu.freeuni.taxi.DriversDuty;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,16 +33,28 @@ public class ScheduleManager {
 
 	private ScheduleManager() {
 		em = EMFactory.createEM();
+		//fillDriversDutyDB();
 	}
 
 	
+
+	private void fillDriversDutyDB(){
+		List<Driver> allDrivers = em.createQuery("SELECT o FROM Driver ", Driver.class).getResultList();
+		for(int i = 0; i < allDrivers.size(); i++){
+			DriversDuty newOne = new DriversDuty();
+			
+//			newOne.setDriversID(allDrivers.get(i).getDriversID);
+			newOne.setIsWorkingNow(0);
+			newOne.setLastWorkingDate(0);
+		}
+	}
 
 	/**
 	 * @return requested drivers
 	 */
 	public List<Driver> getWorkingDrivers(int num) {
 		
-		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " * FROM DriversDuty ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
+		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
 		
 	//	List<DriversDuty> driversDuty2 = em.createQuery("SELECT * FROM DriversDuty ORDER BY lastWorkingDate LIMIT " + num, DriversDuty.class).getResultList();
 
@@ -70,7 +83,7 @@ public class ScheduleManager {
 	}
 
 	private void setWorkingState(List<DriversDuty> driversDuties){
-		List<DriversDuty> workingDrivers = em.createQuery("SELECT * FROM DriversDuty WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
+		List<DriversDuty> workingDrivers = em.createQuery("SELECT o FROM DriversDuty WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
 		
 		for(int i = 0; i < workingDrivers.size(); i++){
 			DriversDuty curr = workingDrivers.get(i);

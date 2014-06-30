@@ -9,6 +9,8 @@
 
 		<class>ge.edu.freeuni.taxi.User</class>
 		<class>ge.edu.freeuni.taxi.PassengerOrder</class>
+		<class>ge.edu.freeuni.taxi.DriversDuty</class>
+		<class>ge.edu.freeuni.taxi.Driver</class>
 		<class>ge.edu.freeuni.taxi.Passenger</class>
 		<class>ge.edu.freeuni.taxi.map.District</class>
 
