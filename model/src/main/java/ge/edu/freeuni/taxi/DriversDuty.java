@@ -1,12 +1,15 @@
 package ge.edu.freeuni.taxi;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Entity;
 
 @Entity
-public class DriversDuty {
+public class DriversDuty implements Serializable{
 
 	private long driversID;
-	private String lastWorkingDate;
+	private Date lastWorkingDate;
 	private int isWorkingNow;
 	
 	public DriversDuty() {
@@ -14,11 +17,11 @@ public class DriversDuty {
 	}
 	
 	
-	public String getLastWorkingDate() {
+	public Date getLastWorkingDate() {
 		return lastWorkingDate;
 	}
 
-	public void setLastWorkingDate(String lastWorkingDate) {
+	public void setLastWorkingDate(Date lastWorkingDate) {
 		this.lastWorkingDate = lastWorkingDate;
 	}
 
@@ -31,7 +34,6 @@ public class DriversDuty {
 	}
 
 	
-
 	public long getDriversID() {
 		return driversID;
 	}
