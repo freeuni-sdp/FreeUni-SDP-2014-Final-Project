@@ -65,7 +65,7 @@ public class OrderManager {
 	 */
 	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, Long districtId) {
 
-		StringBuilder ql = new StringBuilder("FROM FROM PassengerOrder o WHERE 1=1");
+		StringBuilder ql = new StringBuilder("FROM PassengerOrder o WHERE 1=1");
 		Map<String, Object> params = new HashMap<>();
 
 		if (fromDate != null) {
