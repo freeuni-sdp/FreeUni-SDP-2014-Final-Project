@@ -16,6 +16,7 @@ public class ScheduleAdvisor {
 
 	OrderManager orderManager = OrderManager.getInstance();
 	DistrictManager districtManager = DistrictManager.getInstance();
+	DriversManager driversManager = DriversManager.getInstance();
 
 	/**
 	 * according to the last day's statistics, that method returns advise,
@@ -49,7 +50,7 @@ public class ScheduleAdvisor {
 	}
 
 	private int getCalculatedNumOfDrivers(double allOrdersSize, double ordersByDistrictSize) {
-		double allDriversSize = DriversManager.getInstance().getAllDrivers().size();
+		double allDriversSize = driversManager.getAllDrivers().size();
 
 		return new Double(allDriversSize*ordersByDistrictSize/allOrdersSize).intValue();
 	}
