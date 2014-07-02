@@ -21,17 +21,14 @@ public class DriverRestService {
     public List<Driver> getDrivers() {
         System.out.println("all drivers");
         List<Driver> list = new ArrayList<>();
-        list.add(new Driver("qochi", new Location("prochi", System.currentTimeMillis())));
-        list.add(new Driver("vato", new Location("mawkulane", System.currentTimeMillis())));
-        list.add(new Driver("cxondo", new Location("pachkorteeee", System.currentTimeMillis())));
         return list;
     }
 
-    @Path("/{name}")
+    @Path("/")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateDriver( @PathParam("name") String name) {
-        System.out.println("add drivereeee with name " + name);
+    public boolean updateDriver(Driver driver) {
+        System.out.println(driver);
         return false;
     }
 }

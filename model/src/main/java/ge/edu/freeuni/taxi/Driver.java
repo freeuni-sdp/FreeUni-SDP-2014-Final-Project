@@ -12,7 +12,8 @@ import javax.persistence.OneToMany;
 @SuppressWarnings("serial")
 @Entity
 public class Driver implements Serializable{
-
+    private String name;
+    private Location location;
 	private String driversID;
 
 	public Driver() {}
@@ -30,10 +31,6 @@ public class Driver implements Serializable{
 		this.driversID = driversID;
 	}
 
-    private String name;
-
-    private Location location;
-
     public Location getLocation() {
         return location;
     }
@@ -50,4 +47,11 @@ public class Driver implements Serializable{
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "name='" + name + '\'' +
+                ", location=" + location.getLatitude() +
+                " " + location.getLongitude();
+    }
 }
