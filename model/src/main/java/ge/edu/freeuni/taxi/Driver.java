@@ -48,10 +48,14 @@ public class Driver implements Serializable{
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return ((Driver)obj).getName().equals(name);
+    }
+
+    @Override
     public String toString() {
         return "Driver{" +
-                "name='" + name + '\'' +
-                ", location=" + location.getLatitude() +
-                " " + location.getLongitude();
+                "name=" + name +
+                " location=" + location.getName() + "  " + location.getLast_update();
     }
 }

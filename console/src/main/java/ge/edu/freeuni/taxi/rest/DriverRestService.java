@@ -32,11 +32,12 @@ public class DriverRestService {
         return list;
     }
 
-    @Path("/")
+    @Path("/{name}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateDriver(Driver driver) {
-        System.out.println(driver);
-        return false;
+    public List<Driver> updateDriver(@PathParam("name") String name, Driver driver) {
+        driver.getLocation().setLast_update(System.currentTimeMillis());
+        list.set(list.indexOf(driver), driver);
+        return list;
     }
 }
