@@ -22,12 +22,5 @@ public class LocationManager {
 	private LocationManager() {
 		em = EMFactory.createEM();
 	}
-	
-	public void addLocatioin(Location location, long driverId) {
-		Driver driver = em.find(Driver.class, driverId);
-		driver.addLocation(location);
-		em.getTransaction().begin();
-		em.persist(driver);
-		em.getTransaction().commit();
-	}
+
 }

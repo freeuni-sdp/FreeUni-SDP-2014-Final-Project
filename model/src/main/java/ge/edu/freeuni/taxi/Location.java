@@ -1,6 +1,7 @@
 package ge.edu.freeuni.taxi;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,14 +11,20 @@ import javax.persistence.Id;
 @SuppressWarnings("serial")
 @Entity
 public class Location implements Serializable{
-	
-	private long id;
-	
+    private String name;
+
 	private long longitude;
 
-	private long latitude;
+    private long latitude;
+
+    private long last_update;
 	
 	public Location() {}
+
+    public Location(String name, long time) {
+        setName(name);
+        setLast_update(last_update);
+    }
 	
 	public long getLongitude() {
 		return longitude;
@@ -35,13 +42,19 @@ public class Location implements Serializable{
 		this.latitude = latitude;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
-		return id;
-	}
+    public long getLast_update() {
+        return last_update;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setLast_update(long last_update) {
+        this.last_update = last_update;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
