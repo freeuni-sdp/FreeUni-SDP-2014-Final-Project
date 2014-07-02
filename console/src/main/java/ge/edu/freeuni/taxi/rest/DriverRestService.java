@@ -23,6 +23,7 @@ public class DriverRestService {
         List<Driver> list = new ArrayList<>();
         list.add(new Driver("qochi", new Location("prochi", System.currentTimeMillis())));
         list.add(new Driver("vato", new Location("mawkulane", System.currentTimeMillis())));
+        list.add(new Driver("cxondo", new Location("pachkorteeee", System.currentTimeMillis())));
         return list;
     }
 
