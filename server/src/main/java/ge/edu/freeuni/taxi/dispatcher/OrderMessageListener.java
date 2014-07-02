@@ -12,8 +12,6 @@ public class OrderMessageListener implements IncomingMessageListener{
 
 	@Override
 	public void onIncomingMessage(Message message) {
-		if(message.getMessageType() == MessageType.CLIENT_ORDERED){
-			// TODO
 			OrderManager manager = OrderManager.getInstance();
 			PassengerOrder order = new PassengerOrder();
 			order.setCreateTime(new Date());
@@ -21,8 +19,7 @@ public class OrderMessageListener implements IncomingMessageListener{
 			p.setName(message.getSender());
 			order.setPassenger(p);
 			manager.updateOrder(order);
-		}
-		
+			// TODO
 	}
 
 }
