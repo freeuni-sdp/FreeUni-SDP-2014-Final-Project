@@ -19,7 +19,6 @@ public class DriversDuty implements Serializable{
 		
 	}
 	
-	
 	public long getLastWorkingDate() {
 		return lastWorkingDate;
 	}

@@ -1,5 +1,7 @@
 package ge.edu.freeuni.taxi.manager;
 
+import ge.edu.freeuni.taxi.Driver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,12 @@ public class DriversManager {
 		return instance;
 	}
 
-	public List getAllDrivers() {
-		// TODO implement
+	public List<Driver> getAllDrivers() {
 		return new ArrayList();
 	}
+
+    public List<Driver> getOnlineDrivers() {
+
+        return new ArrayList();
+    }
 }

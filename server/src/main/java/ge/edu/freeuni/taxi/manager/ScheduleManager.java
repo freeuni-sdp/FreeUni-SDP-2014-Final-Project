@@ -50,7 +50,7 @@ public class ScheduleManager {
 	 * @return requested drivers
 	 */
 	public List<Driver> getWorkingDrivers(int num) {
-		
+
 		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty o ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
 		List<Driver> drivers = new ArrayList<>();
 		for(int i = 0; i < driversDuty.size(); i++){

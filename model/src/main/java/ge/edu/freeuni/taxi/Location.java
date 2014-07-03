@@ -23,7 +23,7 @@ public class Location implements Serializable{
 
     public Location(String name, long time) {
         setName(name);
-        setLast_update(last_update);
+        setLast_update(time);
     }
 	
 	public long getLongitude() {
