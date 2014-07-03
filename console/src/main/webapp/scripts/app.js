@@ -1,7 +1,7 @@
 /**
  * Initializing main module and setting up the routes.
- * Note that in most cases controllers should be assigned
- * here for views e.g. LocationController.
+ * Note that in most cases controllers should be assigned here for views
+ * e.g. LocationController.
  *
  * @author Vato Maskhulia
  */
@@ -17,9 +17,12 @@
   module.config(function($locationProvider, $routeProvider) {
     $routeProvider
       .when('/', {
-        redirectTo: '/home'
+        redirectTo: '/orders'
       }).when('/home', {
         templateUrl: 'partials/home.html'
+      }).when('/orders', {
+        controller: 'OrdersController',
+        templateUrl: 'partials/orders.html'
       }).when('/location', {
         controller: 'LocationController',
         templateUrl: 'partials/location.html'
@@ -30,5 +33,4 @@
 
     // $locationProvider.html5Mode(true);
     });
-
 }());

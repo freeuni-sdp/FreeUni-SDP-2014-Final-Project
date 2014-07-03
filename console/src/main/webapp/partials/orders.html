@@ -1,0 +1,119 @@
+<div ng-include="'partials/navbar.html'" /></div>
+
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="form-group">
+                <div class="form-inline">
+                  <fieldset>
+                    <legend>New client</legend>
+                  </fieldset>
+                  <div class="form-group">
+                    <label for="name">Phone</label>
+                    <input type="text" class="form-control" ng-model="orderForm.client.phone" placeholder="E.g. 557-545-533">
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Location</label>
+                    <input type="text" class="form-control" ng-model="orderForm.client.location" placeholder="E.g. Saburtalo Street #67">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Driver</label>
+                  <select ng-model="orderForm.selectedDriver" ng-options="driver.name for driver in drivers" class="form-control">
+                </select>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addOrderWithDriver()">
+                  Add order (with driver)
+                </button>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" ng-click="getAvailableDrivers()">
+                  Find available drivers
+                </button>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="checkboxes">Available Drivers</label>
+                <div class="controls" ng-repeat="driver in orderForm.availableDrivers">
+                  <label class="checkbox" for="checkboxes-0">
+                    <input type="checkbox" ng-model="driver.checked">
+                    {{driver.name}} ({{driver.location}})
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addOrder()">
+                  Add order (send twitter message to drivers)
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-inline">
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary pull-right" ng-click="toInputForm()">
+                    Input form
+                  </button>
+                </div>
+
+                <div class="form-group" ng-repeat="order in twitterOrders" >
+                  <button type="submit" class="btn btn-warning pull-right" ng-click="toTwitterClientForm(order)">
+                    {{order.name}}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="well well-sm">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="filter.orders" placeholder="Filter..." />
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Location</th>
+                <th>Driver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="order in orders | filter:filter.orders" >
+                <td>{{ order.client.name }}</td>
+                <td>{{ order.client.location }}</td>
+                <td>{{ order.driver }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div ng-include="'partials/footer.html'" /></div>
