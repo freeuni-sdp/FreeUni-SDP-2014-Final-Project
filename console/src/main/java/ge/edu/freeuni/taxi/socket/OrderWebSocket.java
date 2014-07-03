@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * when active orders will be changed
  * Operator will know about it right away via socket
  */
-@ServerEndpoint(value = "/api/orders")
+@ServerEndpoint(value = "/socket")
 public class OrderWebSocket {
     private static Map<String, Session> map = new HashMap<>();
 
@@ -26,6 +26,7 @@ public class OrderWebSocket {
 
     @OnMessage
     public synchronized String onMessage(String message, Session session) {
+        System.out.println(message);
         return message;
     }
 

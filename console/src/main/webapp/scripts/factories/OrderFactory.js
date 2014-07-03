@@ -17,7 +17,7 @@
         },
         driver: 'drivertwo'
       }];
-      for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < 20; i++) {
         orders.push({
         client: {
           name: '557889900',
@@ -62,7 +62,7 @@
         },
 
         addWithDriver: function(order) {
-          console.log('addWithDriver client:', order.client);
+          console.log('addWithDriver', order);
 
           return addOrder('api/orders', order);
         }

@@ -9,7 +9,7 @@
   angular.module('freeUniTaxiApp')
     .controller('OrdersController', function(
       $scope, OrderFactory, DriverFactory, OrderValidationService,
-      LocationValidationService) {
+      LocationValidationService, socket) {
 
       function IncorrectInputException() {}
 

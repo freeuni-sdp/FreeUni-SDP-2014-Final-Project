@@ -12,7 +12,8 @@
   /**
    * Get main module and set up routing.
    */
-  var module = angular.module('freeUniTaxiApp', ['ngRoute']);
+  var module = angular.module('freeUniTaxiApp', [
+      'ngRoute']);
 
   module.config(function($locationProvider, $routeProvider) {
     $routeProvider
