@@ -18,6 +18,9 @@ public class PassengerOrder implements Serializable {
 	@OneToOne
 	private Passenger passenger;
 
+    @OneToOne
+    private Driver driver;
+
 	private Date createTime;
 
 	public Long getId() {
@@ -43,4 +46,12 @@ public class PassengerOrder implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 }

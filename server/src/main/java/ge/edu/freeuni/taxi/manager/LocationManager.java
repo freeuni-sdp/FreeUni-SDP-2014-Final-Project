@@ -20,7 +20,11 @@ public class LocationManager {
 	}
 
 	private LocationManager() {
-		em = EMFactory.createEM();
+        em = EMFactory.createEM();
 	}
+
+    public void locationUpdate(Driver driver, Location location) {
+
+    }
 
 }
