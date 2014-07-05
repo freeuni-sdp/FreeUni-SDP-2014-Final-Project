@@ -4,7 +4,7 @@
  * Has functionallity to update this data. When location is updated changes
  * table view.
  *
- * @cxondia
+ * @author Giorgi Cxondia
  */
 
 (function() {
