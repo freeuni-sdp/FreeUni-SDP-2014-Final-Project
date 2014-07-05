@@ -30,21 +30,31 @@ public class ScheduleManager {
 
 	private ScheduleManager() {
 		em = EMFactory.createEM();
-		
+		controlWorkersSchedule();
 	}
 
+	
 
 	/**
 	 * @return requested drivers
 	 */
-	public void changeWorkers() {
+	public void controlWorkersSchedule() {
 
-		long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult(); 
-		long num = (long)(count/3);
-		List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
-
-		setWorkingState(drivers);
-		setLastWorkingDate(drivers);
+		while(true){
+			try {
+				long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult(); 
+				long num = (long)(count/3);
+				List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
+		
+				setWorkingState(drivers);
+				setLastWorkingDate(drivers);
+				
+				Thread.sleep(28800000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+		}
 
 	}
 
