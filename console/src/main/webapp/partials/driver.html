@@ -1,5 +1,42 @@
 <div ng-include="'partials/navbar.html'" /></div>
+<style type="text/css">
+    .add_driver {
+        background-color: #EAEAEA;
+        border: 1px solid #DCDCDC;
+        padding: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        width: 200px;
+        margin: 0 auto;
+    }
 
----
+    .add_driverT {
+        width: 100%;
+    }
+
+    .add_driverT caption {
+        font-family: arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .add_driverT td {
+        padding: 5px;
+    }
+</style>
+
+<div class="add_driver">
+    <table class="add_driverT" cellpadding="10" cellspacing="0" border="0">
+        <caption>Add Driver</caption>
+        <tr>
+            <td><input class="form-control" type="text" spellcheck="false" autocomplete="off" placeholder="Driver's Name" /></td>
+        </tr>
+        <tr>
+            <td align="center"><button class="btn btn-primary">Add</button></td>
+        </tr>
+    </table>
+</div>
 
 <div ng-include="'partials/footer.html'" /></div>
