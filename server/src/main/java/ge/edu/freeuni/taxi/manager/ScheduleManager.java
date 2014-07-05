@@ -39,16 +39,12 @@ public class ScheduleManager {
 	 */
 	public void changeWorkers() {
 
-//		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty o ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
-//		List<Driver> drivers = new ArrayList<>();
-//		for(int i = 0; i < driversDuty.size(); i++){
-//			drivers.add(em.find(Driver.class, driversDuty.get(i).getDriversID()));
-//		}
-//
-//		setWorkingState(driversDuty);
-//		setLastWorkingDate(driversDuty);
-//
-//		return drivers;
+		long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult(); 
+		long num = (long)(count/3);
+		List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
+
+		setWorkingState(drivers);
+		setLastWorkingDate(drivers);
 
 	}
 
