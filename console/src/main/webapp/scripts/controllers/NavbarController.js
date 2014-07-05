@@ -13,7 +13,7 @@
 
       var buttons = {
         home: $('#homeButton'),
-        test: $('#testButton'),
+        driver: $('#driverButton'),
         orders: $('#ordersButton'),
         location: $('#locationButton'),
         test2: $('#test2Button'),
@@ -35,7 +35,7 @@
           case '#/home': return buttons.home;
           case '#/orders': return buttons.orders;
           case '#/location': return buttons.location;
-          case '#/test': return buttons.test;
+          case '#/driver': return buttons.driver;
           default: return null;
         }
       }

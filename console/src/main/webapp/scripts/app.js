@@ -24,6 +24,9 @@
       }).when('/orders', {
         controller: 'OrdersController',
         templateUrl: 'partials/orders.html'
+      }).when('/driver', {
+        controller: 'DriverController',
+        templateUrl: 'partials/driver.html'
       }).when('/location', {
         controller: 'LocationController',
         templateUrl: 'partials/location.html'
