@@ -29,6 +29,8 @@ public class PassengerOrder implements Serializable {
 
 	private long duration;
 
+	private double amount;
+
 	public PassengerOrder() {}
 
 	public PassengerOrder(Passenger passenger, Driver driver, Location destination) {
@@ -84,5 +86,13 @@ public class PassengerOrder implements Serializable {
 
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 }
