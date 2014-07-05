@@ -22,7 +22,7 @@ public class DBInitializer {
 			driver.setLocation(location);
 			driver.setAvailable(true);
 			driver.setName("Driver #" + i);
-			driver.setLastWorkingDate(null);
+			driver.setLastWorkingDate(new Date());
 			driver.setLocationLastUpdateTime(new Date());
 
 			em.persist(driver);
