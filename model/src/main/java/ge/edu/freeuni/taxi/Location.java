@@ -1,31 +1,24 @@
 package ge.edu.freeuni.taxi;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+@Embeddable
+public class Location implements Serializable {
 
-@SuppressWarnings("serial")
-@Entity
-public class Location implements Serializable{
-    private String name;
+	private String name;
 
 	private long longitude;
 
-    private long latitude;
+	private long latitude;
 
-    private long last_update;
-	
-	public Location() {}
+	public Location() {
+	}
 
-    public Location(String name, long time) {
-        setName(name);
-        setLast_update(time);
-    }
-	
+	public Location(String name) {
+		setName(name);
+	}
+
 	public long getLongitude() {
 		return longitude;
 	}
@@ -42,19 +35,11 @@ public class Location implements Serializable{
 		this.latitude = latitude;
 	}
 
-    public long getLast_update() {
-        return last_update;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setLast_update(long last_update) {
-        this.last_update = last_update;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 }

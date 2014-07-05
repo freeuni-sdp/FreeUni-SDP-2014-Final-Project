@@ -1,6 +1,6 @@
 package ge.edu.freeuni.taxi.manager;
 
-import ge.edu.freeuni.taxi.map.District;
+import ge.edu.freeuni.taxi.District;
 
 import java.util.ArrayList;
 import java.util.List;

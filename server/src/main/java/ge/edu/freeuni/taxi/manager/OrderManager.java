@@ -1,5 +1,6 @@
 package ge.edu.freeuni.taxi.manager;
 
+import ge.edu.freeuni.taxi.District;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
@@ -60,10 +61,10 @@ public class OrderManager {
 	 *
 	 * @param fromDate date from
 	 * @param toDate date to
-	 * @param districtId id of district
+	 * @param district district
 	 * @return orders
 	 */
-	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, Long districtId) {
+	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, District district) {
 
 		StringBuilder ql = new StringBuilder("FROM PassengerOrder o WHERE 1=1");
 		Map<String, Object> params = new HashMap<>();
@@ -79,8 +80,16 @@ public class OrderManager {
 		}
 
 		//noinspection StatementWithEmptyBody
-		if (districtId != null) {
-			// TODO implement, when exists connection between PassengerOrder and District
+		if (district != null) {
+			ql.append(" AND o.passenger.location.longitude < :upperCornerLongitude " +
+					"AND o.passenger.location.longitude > :lowerCornerLongitude " +
+					"AND o.passenger.location.latitude > :upperCornerLatitude " +
+					"AND o.passenger.location.latitude < :lowerCornerLatitude ");
+
+			params.put("upperCornerLongitude", district.getUpperLeftCorner().getLongitude());
+			params.put("lowerCornerLongitude", district.getLowerRightCorner().getLongitude());
+			params.put("upperCornerLatitude", district.getUpperLeftCorner().getLatitude());
+			params.put("lowerCornerLatitude", district.getLowerRightCorner().getLatitude());
 		}
 
 		Query query = em.createQuery("SELECT o " + ql.toString(), PassengerOrder.class);

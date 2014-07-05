@@ -8,7 +8,7 @@ import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.manager.DistrictManager;
 import ge.edu.freeuni.taxi.manager.DriversManager;
 import ge.edu.freeuni.taxi.manager.OrderManager;
-import ge.edu.freeuni.taxi.map.District;
+import ge.edu.freeuni.taxi.District;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -32,7 +32,7 @@ public class ScheduleAdvisorTest {
 		allDrivers = new Random().nextInt(10);
 
 		OrderManager orderManager = Mockito.mock(OrderManager.class);
-		Mockito.when(orderManager.filterOrders(Mockito.any(Date.class), Mockito.any(Date.class), Mockito.anyLong())).thenReturn(getOrders());
+		Mockito.when(orderManager.filterOrders(Mockito.any(Date.class), Mockito.any(Date.class), Mockito.any(District.class))).thenReturn(getOrders());
 
 		DistrictManager districtManager = Mockito.mock(DistrictManager.class);
 		Mockito.when(districtManager.getAllDistricts()).thenReturn(getDistricts());

@@ -5,7 +5,7 @@ import ge.edu.freeuni.taxi.SchedulingAdvice;
 import ge.edu.freeuni.taxi.manager.OrderManager;
 import ge.edu.freeuni.taxi.manager.DistrictManager;
 import ge.edu.freeuni.taxi.manager.DriversManager;
-import ge.edu.freeuni.taxi.map.District;
+import ge.edu.freeuni.taxi.District;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class ScheduleAdvisor {
 		int allOrders = 0;
 		for (District district : districtManager.getAllDistricts()) {
 
-			List<PassengerOrder> orders = orderManager.filterOrders(getYesterdayDate(), new Date(), district.getId());
+			List<PassengerOrder> orders = orderManager.filterOrders(getYesterdayDate(), new Date(), district);
 			allOrders += orders.size();
 			ordersByArea.put(district, orders);
 		}

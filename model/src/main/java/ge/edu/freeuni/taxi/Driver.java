@@ -1,61 +1,103 @@
 package ge.edu.freeuni.taxi;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-@SuppressWarnings("serial")
 @Entity
-public class Driver implements Serializable{
-    private String name;
-    private Location location;
-	private String driversID;
+public class Driver implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String name;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "name", column = @Column(name = "locationName"))
+	})
+	private Location location;
+
+	private Date lastWorkingDate;
+
+	private boolean available;
+
+	private Date locationLastUpdateTime;
 
 	public Driver() {}
 
-    public Driver(String name, Location location) {
-        this.location = location;
-        this.name = name;
-    }
-
-    public String getDriversID() {
-		return driversID;
+	public Driver(String name, Location location) {
+		this.location = location;
+		this.name = name;
 	}
 
-	public void setDriversID(String driversID) {
-		this.driversID = driversID;
+	public Long getId() {
+		return id;
 	}
 
-    public Location getLocation() {
-        return location;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+	public Location getLocation() {
+		return location;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        return ((Driver)obj).getName().equals(name);
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        return "Driver{" +
-                "name=" + name +
-                " location=" + location.getName() + "  " + location.getLast_update();
-    }
+
+	public Date getLastWorkingDate() {
+		return lastWorkingDate;
+	}
+
+	public void setLastWorkingDate(Date lastWorkingDate) {
+		this.lastWorkingDate = lastWorkingDate;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+	public void setLocationLastUpdateTime(Date locationLastUpdateTime) {
+		this.locationLastUpdateTime = locationLastUpdateTime;
+	}
+
+	public Date getLocationLastUpdateTime() {
+		return locationLastUpdateTime;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return ((Driver) obj).getName().equals(name);
+	}
+
+	@Override
+	public String toString() {
+		return "Driver{" +
+				"name=" + name +
+				" location=" + location.getName();
+	}
 }

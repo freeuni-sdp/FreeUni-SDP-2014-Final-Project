@@ -5,7 +5,6 @@ import java.util.Date;
 import ge.edu.freeuni.taxi.Passenger;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.core.Message;
-import ge.edu.freeuni.taxi.core.MessageType;
 import ge.edu.freeuni.taxi.manager.OrderManager;
 
 public class OrderMessageListener implements IncomingMessageListener{
@@ -27,7 +26,7 @@ public class OrderMessageListener implements IncomingMessageListener{
             message.getLocation().toString();
 			order.setCreateTime(new Date());
 			Passenger p = new Passenger();
-			p.setName(message.getSender());
+			p.setInfo(message.getSender());
 			order.setPassenger(p);
 			manager.updateOrder(order);
 			// TODO
