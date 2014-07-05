@@ -47,10 +47,10 @@
                 <table class="add_driverT" border="0">
                     <caption>Add Driver</caption>
                     <tr>
-                        <td><input class="form-control" type="text" spellcheck="false" autocomplete="off" placeholder="Driver's Name" /></td>
+                        <td><input class="form-control" type="text" spellcheck="false" autocomplete="off" placeholder="Driver's Name" ng-model="driverForm.name" /></td>
                     </tr>
                     <tr>
-                        <td align="center"><button class="btn btn-primary">Add</button></td>
+                        <td align="center"><button class="btn btn-primary" ng-click="add()">Add</button></td>
                     </tr>
                 </table>
             </div>

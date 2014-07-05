@@ -75,8 +75,13 @@
 
         update: function(driver) {
           return processDriversPromise($http.put('/api/drivers/' +
-              driver.name, driver));
+            driver.name, driver));
         },
+
+        add: function(driver) {
+            return processDriversPromise($http.post('/api/drivers/',
+              driver));
+          }
       };
     });
 })();

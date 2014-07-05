@@ -12,7 +12,15 @@
 
   angular.module('freeUniTaxiApp')
     .controller('DriverController', function(
-      $scope) {
+      $scope, DriverFactory) {
 
+          $scope.driverForm = {name: ''};
+          $scope.add = function() {
+              DriverFactory.add({
+                  name: $scope.driverForm.name
+              }).then(function(res) {
+                  console.log(res);
+              });
+          }
     });
 })();
