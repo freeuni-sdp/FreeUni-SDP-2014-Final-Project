@@ -37,6 +37,7 @@ public class ScheduleManager {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
+				System.out.println("aaa");
 				controlWorkersSchedule();
 			}
 		};
@@ -45,9 +46,9 @@ public class ScheduleManager {
 	}
 
 	public void controlWorkersSchedule() {
-		long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult();
-		long num = count/3;
-		List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
+		int count = em.createQuery("SELECT d FROM Driver d").getResultList().size();
+		int num = count/3;
+		List<Driver> drivers = em.createQuery("SELECT o FROM Driver o ORDER BY lastWorkingDate", Driver.class).setMaxResults(num).getResultList();
 
 		setWorkingState(drivers);
 		setLastWorkingDate(drivers);

@@ -2,6 +2,7 @@ package ge.edu.freeuni.taxi.db;
 
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.Location;
+import ge.edu.freeuni.taxi.manager.ScheduleManager;
 
 import javax.persistence.EntityManager;
 import java.util.Date;
@@ -29,5 +30,6 @@ public class DBInitializer {
 		}
 		em.getTransaction().commit();
 		EMFactory.close();
+		ScheduleManager manager = ScheduleManager.getInstance();
 	}
 }
