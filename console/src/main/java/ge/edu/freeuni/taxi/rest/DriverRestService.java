@@ -1,6 +1,7 @@
 package ge.edu.freeuni.taxi.rest;
 
 import ge.edu.freeuni.taxi.Driver;
+import ge.edu.freeuni.taxi.Location;
 import ge.edu.freeuni.taxi.manager.DriversManager;
 
 import javax.ws.rs.*;
@@ -20,41 +21,42 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class DriverRestService {
 
-    private static List<Driver> list = new ArrayList<>();
+    @GET
+    public List<Driver> getDrivers() {
+        return DriversManager.getInstance().getAllDrivers();
+    }
 
-    static {
-		list.addAll(DriversManager.getInstance().getAllDrivers());
-	}
+    @GET
+    @Path("/working")
+    public List<Driver> getWorkingDrivers() {
+        return DriversManager.getInstance().getAvailableDrivers();
+    }
 
-	@GET
-	public List<Driver> getDrivers() {
-			return list;
-	}
+    @GET
+    @Path("/available")
+    public List<Driver> getAvailableDrivers() {
+        return DriversManager.getInstance().getWorkingDrivers();
+    }
 
-	@Path("/available")
-	@GET
-	public List<Driver> getAvailableDrivers() {
-			return DriversManager.getInstance().getAvailableDrivers();
-	}
+    @POST
+    public Driver addDriver(Driver driver) {
+        return DriversManager.getInstance().addDriver(driver);
+    }
 
-	@Path("/working")
-	@GET
-	public List<Driver> getWoringDrivers() {
-			return DriversManager.getInstance().getWorkingDrivers();
-	}
+    @DELETE
+    public void removeDriver(long driverId) {
+        DriversManager.getInstance().deleteDriver(driverId);
+    }
 
-	@POST
-	public Driver addDriver(Driver driver) {
-			return DriversManager.getInstance().updateDriver(driver);
-	}
+    @PUT
+    @Path("{driverId}")
+    public Driver updateDriverName(@PathParam("{driverId}")long driverId, String name) {
+        return DriversManager.getInstance().updateDriverName(driverId, name);
+    }
 
-	@PUT
-	public Driver updateDriver(Driver driver) {
-			return DriversManager.getInstance().updateDriver(driver);
-	}
-
-	@DELETE
-	public void deleteDriver(Driver driver) {
-			DriversManager.getInstance().deleteDriver(driver);
-	}
+    @PUT
+    @Path("{driverId}/location")
+    public Driver updateDriverLocation(@PathParam("{driverId}")long driverId, Location location) {
+        return DriversManager.getInstance().updateDriverLocation(driverId, location);
+    }
 }
