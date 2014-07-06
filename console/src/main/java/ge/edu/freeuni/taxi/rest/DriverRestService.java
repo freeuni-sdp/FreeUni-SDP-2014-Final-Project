@@ -23,27 +23,51 @@ public class DriverRestService {
 
     private static List<Driver> list = new ArrayList<>();
 
-    static {
+        static {
 		list.addAll(DriversManager.getInstance().getAllDrivers());
 	}
 
-    @Path("/")
-    @GET
-    public List<Driver> getDrivers() {
+        @Path("/")
+        @GET
+        public List<Driver> getDrivers() {
         return list;
-    }
+        }
 
-    @Path("/{name}")
-    @PUT
-    public List<Driver> updateDriver(@PathParam("name") String name, Driver driver) {
-        driver.setLocationLastUpdateTime(new Date());
-        list.set(list.indexOf(driver), driver);
-        return list;
-    }
+        @Path("/{name}")
+        @PUT
+        public List<Driver> updateDriver(@PathParam("name") String name, Driver driver) {
+                driver.setLocationLastUpdateTime(new Date());
+                DriversManager.getInstance().updateDriver(driver);
+                return DriversManager.getInstance().getAvailableDrivers();
+        }
 
-    @Path("/available")
-    @GET
-    public List<Driver> getAvailableDrivers() {
-		return DriversManager.getInstance().getAvailableDrivers();
-	}
+        @Path("/available")
+        @GET
+        public List<Driver> getAvailableDrivers() {
+                return DriversManager.getInstance().getAvailableDrivers();
+        }
+
+        @Path("/working")
+        @GET
+        public List<Driver> getWoringDrivers() {
+                return DriversManager.getInstance().getWorkingDrivers();
+        }
+
+        @Path("/")
+        @POST
+        public Driver addDriver(Driver driver) {
+                return DriversManager.getInstance().updateDriver(driver);
+        }
+
+        @Path("/")
+        @PUT
+        public Driver updateDriver(Driver driver) {
+                return DriversManager.getInstance().updateDriver(driver);
+        }
+
+        @Path("/")
+        @DELETE
+        public void deleteDriver(Driver driver) {
+                DriversManager.getInstance().deleteDriver(driver);
+        }
 }

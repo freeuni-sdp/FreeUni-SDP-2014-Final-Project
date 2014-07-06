@@ -31,7 +31,7 @@ public class Driver implements Serializable {
 
 	private boolean available;
 	
-	private boolean isWorking;
+	private boolean working;
 
 	private Date locationLastUpdateTime;
 
@@ -87,16 +87,16 @@ public class Driver implements Serializable {
 		this.locationLastUpdateTime = locationLastUpdateTime;
 	}
 
-	
-	public boolean isWorking() {
-		return isWorking;
-	}
 
-	public void setWorking(boolean isWorking) {
-		this.isWorking = isWorking;
-	}
-	
-	public Date getLocationLastUpdateTime() {
+        public boolean isWorking() {
+                return working;
+        }
+
+        public void setWorking(boolean working) {
+                this.working = working;
+        }
+
+        public Date getLocationLastUpdateTime() {
 		return locationLastUpdateTime;
 	}
 
