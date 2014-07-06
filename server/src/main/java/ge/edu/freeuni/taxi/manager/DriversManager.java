@@ -58,6 +58,16 @@ public class DriversManager {
         em.getTransaction().commit();
         return driver;
     }
+    public Driver updateDriverAvailability(long id, boolean available) {
+    	 em.getTransaction().begin();
+         Driver driver = em.find(Driver.class, id);
+         driver.setAvailable(available);
+         em.merge(driver);
+         em.getTransaction().commit();
+         return driver;
+    }
+    
+    
 
     public Driver updateDriverLocation(long id, Location location) {
         em.getTransaction().begin();
