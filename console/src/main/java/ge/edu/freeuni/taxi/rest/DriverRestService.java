@@ -27,7 +27,7 @@ public class DriverRestService {
 		list.addAll(DriversManager.getInstance().getAllDrivers());
 	}
 
-        @Path("/")
+//        @Path("/")
         @GET
         public List<Driver> getDrivers() {
                 return list;
