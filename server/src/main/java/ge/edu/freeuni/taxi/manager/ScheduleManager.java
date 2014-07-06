@@ -3,9 +3,7 @@ package ge.edu.freeuni.taxi.manager;
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -56,9 +54,7 @@ public class ScheduleManager {
 
 
 	private void setLastWorkingDate(List<Driver> drivers) {
-		for(int i = 0; i < drivers.size(); i++){
-			Driver curr = drivers.get(i);
-
+		for (Driver curr : drivers) {
 			curr.setLastWorkingDate(new Date());
 			//curr.setLastWorkingDate(StringToLong(sdf.format(new Date())));
 			em.getTransaction().begin();
@@ -70,8 +66,7 @@ public class ScheduleManager {
 	private void setWorkingState(List<Driver> drivers){
 		List<Driver> workingDrivers = em.createQuery("SELECT o FROM Driver o WHERE o.working = True", Driver.class).getResultList();
 
-		for(int i = 0; i < workingDrivers.size(); i++){
-			Driver curr = workingDrivers.get(i);
+		for (Driver curr : workingDrivers) {
 			curr.setWorking(false);
 			em.getTransaction().begin();
 			em.merge(curr);
@@ -79,9 +74,7 @@ public class ScheduleManager {
 		}
 
 
-
-		for(int i = 0; i < drivers.size(); i++){
-			Driver curr = drivers.get(i);
+		for (Driver curr : drivers) {
 			curr.setWorking(true);
 			em.getTransaction().begin();
 			em.merge(curr);

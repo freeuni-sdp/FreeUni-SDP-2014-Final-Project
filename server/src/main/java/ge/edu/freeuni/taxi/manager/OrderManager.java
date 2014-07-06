@@ -1,10 +1,6 @@
 package ge.edu.freeuni.taxi.manager;
 
-//<<<<<<< HEAD
-import ge.edu.freeuni.taxi.Passenger;
-//=======
 import ge.edu.freeuni.taxi.District;
-//>>>>>>> e44035742ae663bb863c477620a8d5125db30798
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
@@ -41,16 +37,10 @@ public class OrderManager {
 	 */
 	public void updateOrder(PassengerOrder order) {
 		em.getTransaction().begin();
-		if (order.getId() != null) {
-			System.out.println("Merging Order");
-			em.merge(order);
-		} else {
-			System.out.println("Persisting Order");
-			if (order.getPassenger().getId() == null) {
-				em.persist(order.getPassenger());
-			}
-			em.persist(order);
-		}
+
+		em.merge(order.getPassenger());
+		em.merge(order);
+
 		em.getTransaction().commit();
 	}
 
@@ -60,7 +50,6 @@ public class OrderManager {
 	public List<PassengerOrder> getOrders() {
 		return em.createQuery("SELECT o FROM PassengerOrder o", PassengerOrder.class).getResultList();
 	}
-	
 	
 	public void deleteOrder(PassengerOrder order){
 		
@@ -116,8 +105,6 @@ public class OrderManager {
 		//noinspection unchecked
 		return query.getResultList();
 	}
-
-
 
 	public PassengerOrder getOrderByPassengerName(String passengerName) {
 		Query query = em.createQuery("SELECT o FROM PassengerOrder o WHERE o.passenger.info = :name",PassengerOrder.class).setParameter("name", passengerName);
