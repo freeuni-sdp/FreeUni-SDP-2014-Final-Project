@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.persistence.EntityManager;
 
@@ -30,32 +32,25 @@ public class ScheduleManager {
 
 	private ScheduleManager() {
 		em = EMFactory.createEM();
-		controlWorkersSchedule();
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				controlWorkersSchedule();
+			}
+		};
+
+		timer.schedule(task, 0, 60*60*8);
 	}
 
-	
-
-	/**
-	 * @return requested drivers
-	 */
 	public void controlWorkersSchedule() {
+		long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult();
+		long num = count/3;
+		List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
 
-		while(true){
-			try {
-				long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult(); 
-				long num = (long)(count/3);
-				List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
-		
-				setWorkingState(drivers);
-				setLastWorkingDate(drivers);
-				
-				Thread.sleep(28800000);
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			}
-		}
-
+		setWorkingState(drivers);
+		setLastWorkingDate(drivers);
 	}
 
 
@@ -72,7 +67,7 @@ public class ScheduleManager {
 	}
 
 	private void setWorkingState(List<Driver> drivers){
-		List<Driver> workingDrivers = em.createQuery("SELECT o FROM Driver o WHERE isWorking = 1", Driver.class).getResultList();
+		List<Driver> workingDrivers = em.createQuery("SELECT o FROM Driver o WHERE o.working = True", Driver.class).getResultList();
 
 		for(int i = 0; i < workingDrivers.size(); i++){
 			Driver curr = workingDrivers.get(i);
@@ -93,26 +88,4 @@ public class ScheduleManager {
 		}
 
 	}
-
-
-
-//	public long StringToLong(String dateString){
-//		SimpleDateFormat format = sdf;
-//
-//		try {
-//			return  format.parse(dateString).getTime();
-//
-//		} catch (ParseException e) {
-//
-//			e.printStackTrace();
-//			return -1;
-//		}
-//
-//	}
-//
-//	public String LongToString(long dateLong){
-//
-//		return sdf.format(new Date(dateLong));
-//	}
-
 }

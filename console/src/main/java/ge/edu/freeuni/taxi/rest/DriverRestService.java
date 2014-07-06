@@ -6,7 +6,6 @@ import ge.edu.freeuni.taxi.manager.DriversManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,40 +22,39 @@ public class DriverRestService {
 
     private static List<Driver> list = new ArrayList<>();
 
-        static {
+    static {
 		list.addAll(DriversManager.getInstance().getAllDrivers());
 	}
 
-//        @Path("/")
-        @GET
-        public List<Driver> getDrivers() {
-                return list;
-        }
+	@GET
+	public List<Driver> getDrivers() {
+			return list;
+	}
 
-        @Path("/available")
-        @GET
-        public List<Driver> getAvailableDrivers() {
-                return DriversManager.getInstance().getAvailableDrivers();
-        }
+	@Path("/available")
+	@GET
+	public List<Driver> getAvailableDrivers() {
+			return DriversManager.getInstance().getAvailableDrivers();
+	}
 
-        @Path("/working")
-        @GET
-        public List<Driver> getWoringDrivers() {
-                return DriversManager.getInstance().getWorkingDrivers();
-        }
+	@Path("/working")
+	@GET
+	public List<Driver> getWoringDrivers() {
+			return DriversManager.getInstance().getWorkingDrivers();
+	}
 
-        @POST
-        public Driver addDriver(Driver driver) {
-                return DriversManager.getInstance().updateDriver(driver);
-        }
+	@POST
+	public Driver addDriver(Driver driver) {
+			return DriversManager.getInstance().updateDriver(driver);
+	}
 
-        @PUT
-        public Driver updateDriver(Driver driver) {
-                return DriversManager.getInstance().updateDriver(driver);
-        }
+	@PUT
+	public Driver updateDriver(Driver driver) {
+			return DriversManager.getInstance().updateDriver(driver);
+	}
 
-        @DELETE
-        public void deleteDriver(Driver driver) {
-                DriversManager.getInstance().deleteDriver(driver);
-        }
+	@DELETE
+	public void deleteDriver(Driver driver) {
+			DriversManager.getInstance().deleteDriver(driver);
+	}
 }
