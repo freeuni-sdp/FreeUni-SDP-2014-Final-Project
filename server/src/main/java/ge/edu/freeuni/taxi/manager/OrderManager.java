@@ -1,6 +1,10 @@
 package ge.edu.freeuni.taxi.manager;
 
+//<<<<<<< HEAD
 import ge.edu.freeuni.taxi.Passenger;
+//=======
+import ge.edu.freeuni.taxi.District;
+//>>>>>>> e44035742ae663bb863c477620a8d5125db30798
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
@@ -58,15 +62,13 @@ public class OrderManager {
 	}
 	
 	
-	public void deleteOrder(long id){
+	public void deleteOrder(PassengerOrder order){
 		
-		List<PassengerOrder> orders = getOrders();
-		for (PassengerOrder passengerOrder : orders) {
-			if(passengerOrder.getId() == id){
-				em.remove(passengerOrder);
-				break;
-			}
-		}
+		em.getTransaction().begin();
+
+		em.remove(order);
+
+		em.getTransaction().commit();
 	}
 	
 	/**
@@ -74,12 +76,12 @@ public class OrderManager {
 	 *
 	 * @param fromDate date from
 	 * @param toDate date to
-	 * @param districtId id of district
+	 * @param district district
 	 * @return orders
 	 */
-	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, Long districtId) {
+	public List<PassengerOrder> filterOrders(Date fromDate, Date toDate, District district) {
 
-		StringBuilder ql = new StringBuilder("FROM FROM PassengerOrder o WHERE 1=1");
+		StringBuilder ql = new StringBuilder("FROM PassengerOrder o WHERE 1=1");
 		Map<String, Object> params = new HashMap<>();
 
 		if (fromDate != null) {
@@ -93,8 +95,16 @@ public class OrderManager {
 		}
 
 		//noinspection StatementWithEmptyBody
-		if (districtId != null) {
-			// TODO implement, when exists connection between PassengerOrder and District
+		if (district != null) {
+			ql.append(" AND o.passenger.location.longitude < :upperCornerLongitude " +
+					"AND o.passenger.location.longitude > :lowerCornerLongitude " +
+					"AND o.passenger.location.latitude > :upperCornerLatitude " +
+					"AND o.passenger.location.latitude < :lowerCornerLatitude ");
+
+			params.put("upperCornerLongitude", district.getUpperLeftCorner().getLongitude());
+			params.put("lowerCornerLongitude", district.getLowerRightCorner().getLongitude());
+			params.put("upperCornerLatitude", district.getUpperLeftCorner().getLatitude());
+			params.put("lowerCornerLatitude", district.getLowerRightCorner().getLatitude());
 		}
 
 		Query query = em.createQuery("SELECT o " + ql.toString(), PassengerOrder.class);
@@ -105,5 +115,13 @@ public class OrderManager {
 
 		//noinspection unchecked
 		return query.getResultList();
+	}
+
+
+
+	public PassengerOrder getOrderByPassengerName(String passengerName) {
+		Query query = em.createQuery("SELECT o FROM PassengerOrder o WHERE o.passenger.info = :name",PassengerOrder.class).setParameter("name", passengerName);
+		return (PassengerOrder) query.getSingleResult();
+
 	}
 }

@@ -1,7 +1,6 @@
 package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.Driver;
-import ge.edu.freeuni.taxi.DriversDuty;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
 import java.text.ParseException;
@@ -19,9 +18,9 @@ public class ScheduleManager {
 
 	private EntityManager em;
 
-	
+
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-	
+
 	public static ScheduleManager getInstance() {
 		if (instance == null) {
 			instance = new ScheduleManager();
@@ -31,93 +30,89 @@ public class ScheduleManager {
 
 	private ScheduleManager() {
 		em = EMFactory.createEM();
-		fillDriversDutyDB();
+		controlWorkersSchedule();
 	}
 
 	
-
-	private void fillDriversDutyDB(){
-		List<Driver> allDrivers = em.createQuery("SELECT o FROM Driver o", Driver.class).getResultList();
-		for(int i = 0; i < allDrivers.size(); i++){
-			DriversDuty newOne = new DriversDuty();
-			newOne.setDriversID(allDrivers.get(i).getDriversID());
-			newOne.setIsWorkingNow(0);
-			newOne.setLastWorkingDate(0);
-		}
-	}
 
 	/**
 	 * @return requested drivers
 	 */
-	public List<Driver> getWorkingDrivers(int num) {
+	public void controlWorkersSchedule() {
+
+		while(true){
+			try {
+				long count = (Long) em.createNativeQuery("SELECT count(1) FROM Driver").getSingleResult(); 
+				long num = (long)(count/3);
+				List<Driver> drivers = em.createQuery("SELECT TOP " + num +  " o FROM Driver o ORDER BY lastWorkingDate", Driver.class).getResultList();
 		
-		List<DriversDuty> driversDuty = em.createQuery("SELECT TOP " + num +  " o FROM DriversDuty o ORDER BY lastWorkingDate", DriversDuty.class).getResultList();
-		List<Driver> drivers = new ArrayList<>();
-		for(int i = 0; i < driversDuty.size(); i++){
-			drivers.add(em.find(Driver.class, driversDuty.get(i).getDriversID()));
+				setWorkingState(drivers);
+				setLastWorkingDate(drivers);
+				
+				Thread.sleep(28800000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
 		}
-		
-		setWorkingState(driversDuty);
-		setLastWorkingDate(driversDuty);
-		
-		return drivers;
 
 	}
-	
-	
-	private void setLastWorkingDate(List<DriversDuty> driversDuties) {
-		for(int i = 0; i < driversDuties.size(); i++){
-			DriversDuty curr = driversDuties.get(i);
-			
-			curr.setLastWorkingDate(StringToLong(sdf.format(new Date())));
+
+
+	private void setLastWorkingDate(List<Driver> drivers) {
+		for(int i = 0; i < drivers.size(); i++){
+			Driver curr = drivers.get(i);
+
+			curr.setLastWorkingDate(new Date());
+			//curr.setLastWorkingDate(StringToLong(sdf.format(new Date())));
 			em.getTransaction().begin();
 			em.merge(curr);
 			em.getTransaction().commit();
 		}
 	}
 
-	private void setWorkingState(List<DriversDuty> driversDuties){
-		List<DriversDuty> workingDrivers = em.createQuery("SELECT o FROM DriversDuty o WHERE isWorkingNow = 1", DriversDuty.class).getResultList();
-		
+	private void setWorkingState(List<Driver> drivers){
+		List<Driver> workingDrivers = em.createQuery("SELECT o FROM Driver o WHERE isWorking = 1", Driver.class).getResultList();
+
 		for(int i = 0; i < workingDrivers.size(); i++){
-			DriversDuty curr = workingDrivers.get(i);
-			curr.setIsWorkingNow(0);
+			Driver curr = workingDrivers.get(i);
+			curr.setWorking(false);
 			em.getTransaction().begin();
 			em.merge(curr);
 			em.getTransaction().commit();
 		}
-		
-		
-		
-		for(int i = 0; i < driversDuties.size(); i++){
-			DriversDuty curr = driversDuties.get(i);
-			curr.setIsWorkingNow(1);
+
+
+
+		for(int i = 0; i < drivers.size(); i++){
+			Driver curr = drivers.get(i);
+			curr.setWorking(true);
 			em.getTransaction().begin();
 			em.merge(curr);
 			em.getTransaction().commit();
-		}
-		
-	}
-	
-	
-	
-	public long StringToLong(String dateString){
-		SimpleDateFormat format = sdf;
-		
-		try {
-			return  format.parse(dateString).getTime();
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-			return -1;
 		}
 
 	}
-	
-	public String LongToString(long dateLong){
-		
-		return sdf.format(new Date(dateLong));
-	}
+
+
+
+//	public long StringToLong(String dateString){
+//		SimpleDateFormat format = sdf;
+//
+//		try {
+//			return  format.parse(dateString).getTime();
+//
+//		} catch (ParseException e) {
+//
+//			e.printStackTrace();
+//			return -1;
+//		}
+//
+//	}
+//
+//	public String LongToString(long dateLong){
+//
+//		return sdf.format(new Date(dateLong));
+//	}
 
 }

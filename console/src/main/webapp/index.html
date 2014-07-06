@@ -9,21 +9,27 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-  <div>
+<body style="padding-top: 70px;">
+  <div class="container">
     <!-- Placeholder for views -->
     <div ng-view=""></div>
   </div>
 
+
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
   <script src="scripts/app.js"></script>
   <script src="scripts/services/LocationValidationService.js"></script>
+  <script src="scripts/services/OrderValidationService.js"></script>
+  <script src="scripts/factories/Socket.js"></script>
   <script src="scripts/factories/DriverFactory.js"></script>
+  <script src="scripts/factories/OrderFactory.js"></script>
   <script src="scripts/controllers/NavbarController.js"></script>
+  <script src="scripts/controllers/DriverController.js"></script>
+  <script src="scripts/controllers/OrdersController.js"></script>
   <script src="scripts/controllers/LocationController.js"></script>
 
 </body>

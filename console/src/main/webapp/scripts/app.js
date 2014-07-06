@@ -1,7 +1,7 @@
 /**
  * Initializing main module and setting up the routes.
- * Note that in most cases controllers should be assigned
- * here for views e.g. LocationController.
+ * Note that in most cases controllers should be assigned here for views
+ * e.g. LocationController.
  *
  * @author Vato Maskhulia
  */
@@ -12,14 +12,21 @@
   /**
    * Get main module and set up routing.
    */
-  var module = angular.module('freeUniTaxiApp', ['ngRoute']);
+  var module = angular.module('freeUniTaxiApp', [
+      'ngRoute']);
 
   module.config(function($locationProvider, $routeProvider) {
     $routeProvider
       .when('/', {
-        redirectTo: '/home'
+        redirectTo: '/orders'
       }).when('/home', {
         templateUrl: 'partials/home.html'
+      }).when('/orders', {
+        controller: 'OrdersController',
+        templateUrl: 'partials/orders.html'
+      }).when('/driver', {
+        controller: 'DriverController',
+        templateUrl: 'partials/driver.html'
       }).when('/location', {
         controller: 'LocationController',
         templateUrl: 'partials/location.html'
@@ -30,5 +37,4 @@
 
     // $locationProvider.html5Mode(true);
     });
-
 }());

@@ -1,7 +1,6 @@
 /**
- * This service must validate the correctness of location i.e.
- * check if provided location really exist or is it in the
- * correct format for our app.
+ * This service must validate the correctness of location i.e. check if
+ * provided location really exist or is it in the correct format for our app.
  *
  * @author Vato Maskhulia
  */
@@ -13,8 +12,8 @@
     .service('LocationValidationService', function() {
 
       /**
-       * Simple check whether provided location
-       * is a non empty string.
+       * Simple check whether provided location is a non empty string.
+       * @return {boolean} depends on input's correctness.
        */
       function validate(location) {
         if (typeof location !== 'string') {
@@ -31,7 +30,5 @@
       return {
         validate: validate
       };
-
     });
-
 })();

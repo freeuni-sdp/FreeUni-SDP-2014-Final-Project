@@ -1,0 +1,83 @@
+<div ng-include="'partials/navbar.html'" /></div>
+<style type="text/css">
+    .drivers {
+        width: 70%;
+    }
+
+    .drivers td {
+        padding: 20px;
+        vertical-align: top;
+    }
+
+    .add_driverW {
+        width: 30%;
+    }
+
+    .add_driver {
+        background-color: #EAEAEA;
+        border: 1px solid #DCDCDC;
+        padding: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .add_driverT {
+        width: 100%;
+    }
+
+    .add_driverT caption {
+        font-family: arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .add_driverT td {
+        padding: 5px;
+    }
+</style>
+
+<table class="drivers" border="0" align="center">
+    <tr>
+        <td class="add_driverW">
+            <div class="add_driver">
+                <table class="add_driverT" border="0">
+                    <caption>Add Driver</caption>
+                    <tr>
+                        <td><input class="form-control" type="text" spellcheck="false" autocomplete="off" placeholder="Driver's Name" ng-model="driverForm.name" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><button class="btn btn-primary" ng-click="add()">Add</button></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td>
+            <div class="drivers_listW">
+                <div class="well well-sm">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th align="center" align="center">Name</th>
+                                <th align="center" width="10%" align="center">Edit</th>
+                                <th align="center" width="10%" align="center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nameC" valign="middle">1</td>
+                                <td class="editC" align="center" valign="middle"><button class="btn btn-primary">Edit</button></td>
+                                <td class="deleteC" align="center" valign="middle"><button class="btn btn-danger">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div ng-include="'partials/footer.html'" /></div>

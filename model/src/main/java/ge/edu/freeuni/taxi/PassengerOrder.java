@@ -1,5 +1,6 @@
 package ge.edu.freeuni.taxi;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,13 +13,32 @@ import java.util.Date;
 public class PassengerOrder implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToOne
 	private Passenger passenger;
 
+    @OneToOne
+    private Driver driver;
+
+	@Embedded
+	private Location destination;
+
 	private Date createTime;
+
+	private long duration;
+
+	private double amount;
+
+	public PassengerOrder() {}
+
+	public PassengerOrder(Passenger passenger, Driver driver, Location destination) {
+		this.passenger = passenger;
+		this.driver = driver;
+		this.destination = destination;
+		this.createTime = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -42,5 +62,37 @@ public class PassengerOrder implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+	public Location getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Location destination) {
+		this.destination = destination;
+	}
+
+	public long getDuration() {
+		return duration;
+	}
+
+	public void setDuration(long duration) {
+		this.duration = duration;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 }

@@ -1,8 +1,8 @@
 /**
- * Controller for drivers' location module. Provides view with list
- * of drivers, their locations and last time when that
- * information was updated. Has functionallity to update this data.
- * When location is updated changes table view.
+ * Controller for drivers' location module. Provides view with list of drivers,
+ * their locations and last time when that information was updated.
+ * Has functionallity to update this data. When location is updated changes
+ * table view.
  *
  * @author Vato Maskhulia
  */
@@ -20,14 +20,10 @@
       init();
 
       function init() {
-
         DriverFactory.getDrivers().then(function(res) {
           $scope.drivers = res.data;
           $scope.locationForm.selectedDriver = $scope.drivers[0];
-        }, function(error) {
-          console.error(error);
         });
-
       }
 
       $scope.updateLocation = function() {
@@ -37,7 +33,7 @@
         }
 
         var driver = $scope.locationForm.selectedDriver.name,
-          location = $scope.locationForm.location;
+            location = $scope.locationForm.location;
 
         if (!LocationValidationService.validate(location)) {
           alert("Incorrent Location!");
@@ -49,11 +45,7 @@
         }).then(function(res) {
           $scope.drivers = res.data;
           $scope.locationForm.selectedDriver = $scope.drivers[0]; // TODO
-        }, function(err) {
-          console.error(err);
         });
       };
-
     });
-
 })();

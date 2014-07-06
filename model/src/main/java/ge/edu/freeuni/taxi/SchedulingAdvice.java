@@ -1,7 +1,5 @@
 package ge.edu.freeuni.taxi;
 
-import ge.edu.freeuni.taxi.map.District;
-
 import java.util.Map;
 
 /**

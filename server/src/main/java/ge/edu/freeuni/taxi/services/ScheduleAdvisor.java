@@ -5,16 +5,18 @@ import ge.edu.freeuni.taxi.SchedulingAdvice;
 import ge.edu.freeuni.taxi.manager.OrderManager;
 import ge.edu.freeuni.taxi.manager.DistrictManager;
 import ge.edu.freeuni.taxi.manager.DriversManager;
-import ge.edu.freeuni.taxi.map.District;
+import ge.edu.freeuni.taxi.District;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ScheduleAdvisor {
 
-	private OrderManager orderManager = OrderManager.getInstance();
-	private DistrictManager districtManager = DistrictManager.getInstance();
+	OrderManager orderManager = OrderManager.getInstance();
+	DistrictManager districtManager = DistrictManager.getInstance();
+	DriversManager driversManager = DriversManager.getInstance();
 
 	/**
 	 * according to the last day's statistics, that method returns advise,
@@ -27,10 +29,9 @@ public class ScheduleAdvisor {
 		int allOrders = 0;
 		for (District district : districtManager.getAllDistricts()) {
 
-			// TODO - decide which time period of orders to include
-			List<PassengerOrder> ordersByDistrict = orderManager.filterOrders(null, null, district.getId());
-			allOrders += ordersByDistrict.size();
-			ordersByArea.put(district, ordersByDistrict);
+			List<PassengerOrder> orders = orderManager.filterOrders(getYesterdayDate(), new Date(), district);
+			allOrders += orders.size();
+			ordersByArea.put(district, orders);
 		}
 
 		Map<District, Integer> districtIntegerMap = new HashMap<>();
@@ -42,8 +43,14 @@ public class ScheduleAdvisor {
 		return advice;
 	}
 
+	protected Date getYesterdayDate() {
+		Date yesterday = new Date();
+		yesterday.setDate(yesterday.getDate() - 1);
+		return yesterday;
+	}
+
 	private int getCalculatedNumOfDrivers(double allOrdersSize, double ordersByDistrictSize) {
-		double allDriversSize = DriversManager.getInstance().getAllDrivers().size();
+		double allDriversSize = driversManager.getAllDrivers().size();
 
 		return new Double(allDriversSize*ordersByDistrictSize/allOrdersSize).intValue();
 	}
