@@ -1,8 +1,12 @@
 package ge.edu.freeuni.taxi.dispatcher;
 
 
+import java.sql.DriverManager;
+
+import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.core.Message;
+import ge.edu.freeuni.taxi.manager.DriversManager;
 import ge.edu.freeuni.taxi.manager.OrderManager;
 
 public class CancelMessageListener implements IncomingMessageListener{
@@ -13,9 +17,12 @@ public class CancelMessageListener implements IncomingMessageListener{
 		OrderManager orderManager = OrderManager.getInstance();
 		String passengerName = message.getSender();
 		PassengerOrder order = orderManager.getOrderByPassengerName(passengerName);
-		if(order!=null) orderManager.deleteOrder(order);
+		if(order!=null)  orderManager.deleteOrder(order);
 		
+		DriversManager driverManager = DriversManager.getInstance();
 		
+		Driver d  = order.getDriver();
+		driverManager.updateDriverAvailability(d.getId(), true);
 		
 	}
 
