@@ -27,18 +27,10 @@ public class DriverRestService {
 		list.addAll(DriversManager.getInstance().getAllDrivers());
 	}
 
-        @Path("/")
+//        @Path("/")
         @GET
         public List<Driver> getDrivers() {
-        return list;
-        }
-
-        @Path("/{name}")
-        @PUT
-        public List<Driver> updateDriver(@PathParam("name") String name, Driver driver) {
-                driver.setLocationLastUpdateTime(new Date());
-                DriversManager.getInstance().updateDriver(driver);
-                return DriversManager.getInstance().getAvailableDrivers();
+                return list;
         }
 
         @Path("/available")
@@ -53,19 +45,16 @@ public class DriverRestService {
                 return DriversManager.getInstance().getWorkingDrivers();
         }
 
-        @Path("/")
         @POST
         public Driver addDriver(Driver driver) {
                 return DriversManager.getInstance().updateDriver(driver);
         }
 
-        @Path("/")
         @PUT
         public Driver updateDriver(Driver driver) {
                 return DriversManager.getInstance().updateDriver(driver);
         }
 
-        @Path("/")
         @DELETE
         public void deleteDriver(Driver driver) {
                 DriversManager.getInstance().deleteDriver(driver);

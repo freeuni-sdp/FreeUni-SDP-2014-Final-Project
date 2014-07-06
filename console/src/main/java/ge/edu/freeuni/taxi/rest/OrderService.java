@@ -19,7 +19,6 @@ import java.util.List;
 public class OrderService {
 
     @POST
-    @Path("/")
     public void assigneeDriverOnOrder(Client client, String driver) {
         System.out.println(client);
         System.out.println(driver);

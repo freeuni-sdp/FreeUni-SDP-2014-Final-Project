@@ -27,22 +27,22 @@ public class DriversManager {
 		return em.createQuery("SELECT d FROM Driver d" , Driver.class).getResultList();
 	}
 
-        public List<Driver> getAvailableDrivers() {
+    public List<Driver> getAvailableDrivers() {
 		return em.createQuery("SELECT d FROM Driver d WHERE d.available = True", Driver.class).getResultList();
 	}
 
-        public List<Driver> getWorkingDrivers() {
-                return em.createQuery("SELECT d FROM Driver d WHERE d.woring = True", Driver.class).getResultList();
-        }
+	public List<Driver> getWorkingDrivers() {
+			return em.createQuery("SELECT d FROM Driver d WHERE d.working = True", Driver.class).getResultList();
+	}
 
-        public Driver updateDriver(Driver driver) {
+	public Driver updateDriver(Driver driver) {
 		em.getTransaction().begin();
 
 		em.merge(driver);
 
 		em.getTransaction().commit();
 
-                return driver;
+		return driver;
 	}
 
 	public void deleteDriver(Driver driver) {
