@@ -11,15 +11,11 @@ import java.util.TimerTask;
 
 import javax.persistence.EntityManager;
 
-
 public class ScheduleManager {
 
 	private static ScheduleManager instance;
 
 	private EntityManager em;
-
-
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 
 	public static ScheduleManager getInstance() {
 		if (instance == null) {
@@ -52,7 +48,6 @@ public class ScheduleManager {
 		setLastWorkingDate(drivers);
 	}
 
-
 	private void setLastWorkingDate(List<Driver> drivers) {
 		for (Driver curr : drivers) {
 			curr.setLastWorkingDate(new Date());
@@ -73,13 +68,11 @@ public class ScheduleManager {
 			em.getTransaction().commit();
 		}
 
-
 		for (Driver curr : drivers) {
 			curr.setWorking(true);
 			em.getTransaction().begin();
 			em.merge(curr);
 			em.getTransaction().commit();
 		}
-
 	}
 }

@@ -25,16 +25,22 @@ public class DriversManager {
 	}
 
     public List<Driver> getAllDrivers() {
-        return em.createQuery("SELECT d FROM Driver d" , Driver.class).getResultList();
-    }
+		List<Driver> result = em.createQuery("SELECT d FROM Driver d" , Driver.class).getResultList();
+		IncomeManager.getInstance().adjustDriversIncome(result);
+		return result;
+	}
 
     public List<Driver> getAvailableDrivers() {
-        return em.createQuery("SELECT d FROM Driver d WHERE d.available = True and d.working = True", Driver.class).getResultList();
-    }
+		List<Driver> result = em.createQuery("SELECT d FROM Driver d WHERE d.available = True and d.working = True", Driver.class).getResultList();
+		IncomeManager.getInstance().adjustDriversIncome(result);
+		return result;
+	}
 
     public List<Driver> getWorkingDrivers() {
-        return em.createQuery("SELECT d FROM Driver d WHERE d.working = True", Driver.class).getResultList();
-    }
+		List<Driver> result = em.createQuery("SELECT d FROM Driver d WHERE d.working = True", Driver.class).getResultList();
+		IncomeManager.getInstance().adjustDriversIncome(result);
+		return result;
+	}
 
     public Driver addDriver(Driver driver) {
         em.getTransaction().begin();
@@ -56,16 +62,20 @@ public class DriversManager {
         driver.setName(name);
         em.merge(driver);
         em.getTransaction().commit();
+
+		IncomeManager.getInstance().adjustDriverIncome(driver);
         return driver;
     }
     public Driver updateDriverAvailability(long id, boolean available) {
-    	 em.getTransaction().begin();
-         Driver driver = em.find(Driver.class, id);
-         driver.setAvailable(available);
-         em.merge(driver);
-         em.getTransaction().commit();
-         return driver;
-    }
+		em.getTransaction().begin();
+		Driver driver = em.find(Driver.class, id);
+		driver.setAvailable(available);
+		em.merge(driver);
+		em.getTransaction().commit();
+
+		IncomeManager.getInstance().adjustDriverIncome(driver);
+		return driver;
+	}
 
     public Driver updateDriverLocation(long id, Location location) {
         em.getTransaction().begin();
@@ -73,10 +83,14 @@ public class DriversManager {
         driver.setLocation(location);
         em.merge(driver);
         em.getTransaction().commit();
-        return driver;
+
+		IncomeManager.getInstance().adjustDriverIncome(driver);
+		return driver;
     }
 
     public Driver getDriver(String name) {
-        return em.createQuery("SELECT d FROM Driver d WHERE d.name = :name", Driver.class).setParameter("name", name).getSingleResult();
-    }
+		Driver result = em.createQuery("SELECT d FROM Driver d WHERE d.name = :name", Driver.class).setParameter("name", name).getSingleResult();
+		IncomeManager.getInstance().adjustDriverIncome(result);
+		return result;
+	}
 }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Driver implements Serializable {
@@ -34,6 +35,9 @@ public class Driver implements Serializable {
 	private boolean working;
 
 	private Date locationLastUpdateTime;
+
+	@Transient
+	private Double income;
 
 	public Driver() {}
 
@@ -112,5 +116,11 @@ public class Driver implements Serializable {
 				" location=" + location.getName();
 	}
 
-	
+	public Double getIncome() {
+		return income;
+	}
+
+	public void setIncome(Double income) {
+		this.income = income;
+	}
 }
