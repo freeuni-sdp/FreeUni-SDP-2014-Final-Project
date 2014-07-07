@@ -67,4 +67,8 @@ public class DriversManager {
         em.getTransaction().commit();
         return driver;
     }
+
+    public Driver getDriver(String name) {
+        return em.createQuery("SELECT d FROM Driver d WHERE d.name = :name", Driver.class).setParameter("name", name).getSingleResult();
+    }
 }

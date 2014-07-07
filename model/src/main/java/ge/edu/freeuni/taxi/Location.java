@@ -8,34 +8,30 @@ public class Location implements Serializable {
 
 	private String name;
 
-	private long longitude;
+	private double longitude;
 
-	private long latitude;
+	private double latitude;
 
 	public Location() {
 	}
 
-	public Location(String name) {
-		setName(name);
-	}
+    public double getLongitude() {
+        return longitude;
+    }
 
-	public long getLongitude() {
-		return longitude;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setLongitude(long longitude) {
-		this.longitude = longitude;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
-	public long getLatitude() {
-		return latitude;
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setLatitude(long latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getName() {
+    public String getName() {
 		return name;
 	}
 
