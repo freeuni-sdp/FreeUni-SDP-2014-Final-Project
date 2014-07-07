@@ -52,7 +52,7 @@ public class IncomeManager {
 		Collections.sort(incomes, new Comparator<DriverIncome>() {
 			@Override
 			public int compare(DriverIncome o1, DriverIncome o2) {
-				if (o1 == null || o2 == null) {
+				if (o1 == null || o1 == null) {
 					return 0;
 				}
 				return (int) (o1.getAmount() - o2.getAmount());
