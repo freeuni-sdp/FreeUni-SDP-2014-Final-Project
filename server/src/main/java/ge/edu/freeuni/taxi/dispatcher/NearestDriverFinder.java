@@ -33,15 +33,15 @@ public class NearestDriverFinder {
 	public Driver getNearestDriver(Passenger passenger) {
 		List<Driver> avaliableDrivers = driversManager.getAvailableDrivers();
 		Driver nearesrtDriver = null;
-		long smallestDistance = Long.MAX_VALUE;
+		double smallestDistance = Double.MAX_VALUE;
 		for (Driver driver : avaliableDrivers) {
 			Location driverLocation = driver.getLocation();
 			Location passangerLocation = passenger.getLocation();
-			long dlat = driverLocation.getLatitude();
-			long dlong = driverLocation.getLongitude();
-			long plat = passangerLocation.getLatitude();
-			long plong = passangerLocation.getLongitude();
-			long distance = (plat - dlat) * (plat - dlat) + (plong - dlong)
+			double dlat = driverLocation.getLatitude();
+			double dlong = driverLocation.getLongitude();
+			double plat = passangerLocation.getLatitude();
+			double plong = passangerLocation.getLongitude();
+			double distance = (plat - dlat) * (plat - dlat) + (plong - dlong)
 					* (plong - dlong);
 			if (distance <= smallestDistance) {
 				smallestDistance = distance;

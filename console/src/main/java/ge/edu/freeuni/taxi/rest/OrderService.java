@@ -1,9 +1,8 @@
 package ge.edu.freeuni.taxi.rest;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import ge.edu.freeuni.taxi.PassengerOrder;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -17,6 +16,11 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class OrderService {
+
+    @GET
+    public PassengerOrder getPassangerOrder() {
+        return new PassengerOrder();
+    }
 
     @POST
     public void assigneeDriverOnOrder(Client client, String driver) {
