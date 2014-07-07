@@ -3,6 +3,7 @@ package ge.edu.freeuni.taxi.manager;
 import ge.edu.freeuni.taxi.District;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
+import org.hibernate.loader.custom.NonUniqueDiscoveredSqlAliasException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -108,7 +109,10 @@ public class OrderManager {
 
 	public PassengerOrder getOrderByPassengerName(String passengerName) {
 		Query query = em.createQuery("SELECT o FROM PassengerOrder o WHERE o.passenger.info = :name",PassengerOrder.class).setParameter("name", passengerName);
-		return (PassengerOrder) query.getSingleResult();
-
+		try {
+			return (PassengerOrder) query.getSingleResult();
+		} catch (NonUniqueDiscoveredSqlAliasException ex) {
+			return (PassengerOrder)query.getResultList().get(0);
+		}
 	}
 }
