@@ -1,15 +1,20 @@
 package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.District;
+import ge.edu.freeuni.taxi.db.EMFactory;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class DistrictManager {
 
 	private static DistrictManager instance;
 
-	private DistrictManager() {	}
+	private EntityManager em;
+
+	private DistrictManager() {
+		em = EMFactory.createEM();
+	}
 
 	public static DistrictManager getInstance() {
 		if (instance == null) {
@@ -19,7 +24,6 @@ public class DistrictManager {
 	}
 
 	public List<District> getAllDistricts() {
-		// TODO implement
-		return new ArrayList<>();
+		return em.createQuery("SELECT d FROM District d", District.class).getResultList();
 	}
 }

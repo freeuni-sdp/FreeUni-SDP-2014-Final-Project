@@ -19,6 +19,8 @@ public class District implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String name;
+
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "latitude", column = @Column(name = "upper_latitude")),
@@ -61,5 +63,13 @@ public class District implements Serializable {
 
 	public boolean contains(Location location) {
 		throw new NotImplementedException();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
