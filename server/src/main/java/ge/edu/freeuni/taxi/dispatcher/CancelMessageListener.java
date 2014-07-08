@@ -17,13 +17,18 @@ public class CancelMessageListener implements IncomingMessageListener{
 		OrderManager orderManager = OrderManager.getInstance();
 		String passengerName = message.getSender();
 		PassengerOrder order = orderManager.getOrderByPassengerName(passengerName);
-		if(order!=null)  orderManager.deleteOrder(order);
-		
-		DriversManager driverManager = DriversManager.getInstance();
-		
-		Driver d  = order.getDriver();
-		driverManager.updateDriverAvailability(d.getId(), true);
-		
+		if(order != null) orderManager.deleteOrder(order);
+
+        Driver driver  = order.getDriver();
+        /**
+         * maybe driver is not assigned
+         * on PassengerOrder then no one
+         * should be updated
+         */
+        if (driver != null) {
+            DriversManager driverManager = DriversManager.getInstance();
+            driverManager.updateDriverAvailability(driver.getId(), true);
+        }
 	}
 
 }
