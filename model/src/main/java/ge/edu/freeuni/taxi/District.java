@@ -62,7 +62,12 @@ public class District implements Serializable {
 	}
 
 	public boolean contains(Location location) {
-		throw new NotImplementedException();
+		if (location.getLongitude() < upperLeftCorner.getLongitude() && location.getLongitude() > lowerRightCorner.getLongitude()) {
+			if (location.getLatitude() > upperLeftCorner.getLatitude() && location.getLatitude() < lowerRightCorner.getLatitude()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String getName() {

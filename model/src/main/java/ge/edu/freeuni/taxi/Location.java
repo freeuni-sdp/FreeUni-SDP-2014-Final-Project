@@ -12,8 +12,7 @@ public class Location implements Serializable {
 
 	private double latitude;
 
-	public Location() {
-	}
+	public Location() {}
 
 	public Location(double longitude, double latitude) {
 		this.longitude = longitude;

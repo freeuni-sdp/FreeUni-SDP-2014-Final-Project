@@ -91,18 +91,17 @@ public class Driver implements Serializable {
 		this.locationLastUpdateTime = locationLastUpdateTime;
 	}
 
-
-        public boolean isWorking() {
-                return working;
-        }
-
-        public void setWorking(boolean working) {
-                this.working = working;
-        }
-
-        public Date getLocationLastUpdateTime() {
-		return locationLastUpdateTime;
+	public boolean isWorking() {
+			return working;
 	}
+
+	public void setWorking(boolean working) {
+			this.working = working;
+	}
+
+	public Date getLocationLastUpdateTime() {
+	return locationLastUpdateTime;
+}
 
 	@Override
 	public boolean equals(Object obj) {
