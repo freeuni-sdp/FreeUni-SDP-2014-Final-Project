@@ -50,7 +50,7 @@
           alert("Incorrent Location!");
           return;
         }
-          
+
         DriverFactory.updateLocation(getDriverId(driver), {
             name: location
         }).then(function(res) {

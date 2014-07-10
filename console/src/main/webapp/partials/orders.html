@@ -96,16 +96,18 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>Client</th>
-                <th>Location</th>
+                <th>Passenger</th>
+                <th>Destination</th>
                 <th>Driver</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="order in orders | filter:filter.orders" >
-                <td>{{ order.client.name }}</td>
-                <td>{{ order.client.location }}</td>
-                <td>{{ order.driver }}</td>
+              <tr ng-repeat="order in activeOrders | filter:filter.orders" >
+                <td>{{ order.passenger.info }}</td>
+                <td>{{ order.destination.name }}</td>
+                <td>{{ order.driver.name }}</td>
+                <td>{{ order.amount }} GEL</td>
               </tr>
             </tbody>
           </table>

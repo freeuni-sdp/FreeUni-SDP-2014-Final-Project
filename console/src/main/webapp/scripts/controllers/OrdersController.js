@@ -9,11 +9,11 @@
   angular.module('freeUniTaxiApp')
     .controller('OrdersController', function(
       $scope, OrderFactory, DriverFactory, OrderValidationService,
-      LocationValidationService, socket) {
+      LocationValidationService) {
 
       function IncorrectInputException() {}
 
-      $scope.orders = [];
+      $scope.activeOrders = [];
       $scope.twitterOrders = [];
       $scope.drivers = [];
       $scope.orderForm = {
@@ -30,12 +30,17 @@
       init();
 
       function init() {
-        OrderFactory.onUpdate(function(orders) {
-          $scope.orders = orders;
+        $scope.activeOrders = OrderFactory.getActiveOrders(); // temp
+        $scope.twitterOrders = OrderFactory.getTwitterOrders(); // temp
+
+        OrderFactory.onOrdersUpdate(function(orders) {
+          $scope.activeOrders = orders;
+          $scope.$apply();
         });
 
         OrderFactory.onTwitterOrders(function(orders) {
           $scope.twitterOrders = orders;
+          $scope.$apply();
         });
 
         DriverFactory.getDrivers().then(function(res) {
