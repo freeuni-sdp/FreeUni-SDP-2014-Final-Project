@@ -6,9 +6,6 @@ import ge.edu.freeuni.taxi.manager.DriversManager;
 
 import java.util.Date;
 
-/**
- * Created by taso on 7/10/14.
- */
 public class OrderRestServiceHelper {
 
     public static void modifyPassengerOrderAndAssignDriver(PassengerOrder passengerOrder) {
