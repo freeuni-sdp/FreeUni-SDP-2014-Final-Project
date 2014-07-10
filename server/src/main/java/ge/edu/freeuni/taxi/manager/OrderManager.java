@@ -115,4 +115,8 @@ public class OrderManager {
 			return (PassengerOrder)query.getResultList().get(0);
 		}
 	}
+
+    public List<PassengerOrder> getActiveOrders() {
+        return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE", PassengerOrder.class).getResultList();
+    }
 }

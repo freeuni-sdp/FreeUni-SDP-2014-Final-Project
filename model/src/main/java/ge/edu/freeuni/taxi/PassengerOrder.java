@@ -31,7 +31,9 @@ public class PassengerOrder implements Serializable {
 
 	private double amount;
 
-	public PassengerOrder() {}
+    private boolean active;
+
+    public PassengerOrder() {}
 
 	public PassengerOrder(Passenger passenger, Driver driver, Location destination) {
 		this.passenger = passenger;
@@ -47,6 +49,14 @@ public class PassengerOrder implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
 	public Passenger getPassenger() {
 		return passenger;

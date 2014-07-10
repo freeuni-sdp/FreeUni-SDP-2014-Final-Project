@@ -4,6 +4,7 @@ import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.Location;
 import ge.edu.freeuni.taxi.Passenger;
 import ge.edu.freeuni.taxi.PassengerOrder;
+import ge.edu.freeuni.taxi.manager.OrderManager;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +21,12 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class OrderService {
+
+    @GET
+    @Path("/active")
+    public List<PassengerOrder> getPassangerOrders() {
+        return OrderManager.getInstance().getActiveOrders();
+    }
 
     @GET
     public PassengerOrder getPassangerOrder() {
@@ -48,49 +55,5 @@ public class OrderService {
         order.setDriver(driver);
         order.setPassenger(passenger);
         return order;
-    }
-
-    @POST
-    public void assigneeDriverOnOrder(Client client, String driver) {
-        System.out.println(client);
-        System.out.println(driver);
-    }
-
-    @POST
-    @Path("/tweet")
-    public void assigneeAvailableDriversOnOrder(Client client, List<String> drivers) {
-        System.out.println(client);
-        for (String s : drivers)
-            System.out.println(s);
-    }
-
-
-    private class Client {
-        private String name;
-        private String location;
-
-        public String getLocation() {
-            return location;
-        }
-
-        public void setLocation(String location) {
-            this.location = location;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return "Client{" +
-                    "name='" + name + '\'' +
-                    ", location='" + location + '\'' +
-                    '}';
-        }
     }
 }
