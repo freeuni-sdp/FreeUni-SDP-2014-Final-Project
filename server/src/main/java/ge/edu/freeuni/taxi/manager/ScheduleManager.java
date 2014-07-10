@@ -3,7 +3,6 @@ package ge.edu.freeuni.taxi.manager;
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.db.EMFactory;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -51,7 +50,6 @@ public class ScheduleManager {
 	private void setLastWorkingDate(List<Driver> drivers) {
 		for (Driver curr : drivers) {
 			curr.setLastWorkingDate(new Date());
-			//curr.setLastWorkingDate(StringToLong(sdf.format(new Date())));
 			em.getTransaction().begin();
 			em.merge(curr);
 			em.getTransaction().commit();

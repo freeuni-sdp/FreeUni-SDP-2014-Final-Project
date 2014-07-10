@@ -1,8 +1,5 @@
 package ge.edu.freeuni.taxi.dispatcher;
 
-
-import java.sql.DriverManager;
-
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.core.Message;
@@ -30,5 +27,4 @@ public class CancelMessageListener implements IncomingMessageListener{
             driverManager.updateDriverAvailability(driver.getId(), true);
         }
 	}
-
 }
