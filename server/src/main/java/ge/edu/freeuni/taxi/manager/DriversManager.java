@@ -92,4 +92,8 @@ public class DriversManager {
 		IncomeManager.getInstance().adjustDriverIncome(result);
 		return result;
 	}
+
+    public Driver getDriver(Long id) {
+        return em.find(Driver.class, id);
+    }
 }

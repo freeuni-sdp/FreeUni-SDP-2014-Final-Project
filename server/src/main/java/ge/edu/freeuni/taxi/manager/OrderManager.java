@@ -119,4 +119,12 @@ public class OrderManager {
     public List<PassengerOrder> getActiveOrders() {
         return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE", PassengerOrder.class).getResultList();
     }
+
+    public void createPassengerOrder(PassengerOrder passengerOrder) {
+        em.getTransaction().begin();
+        em.persist(passengerOrder.getDriver());
+        em.persist(passengerOrder.getPassenger());
+        em.persist(passengerOrder);
+        em.getTransaction().commit();
+    }
 }
