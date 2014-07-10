@@ -33,6 +33,8 @@ public class OrderMessageListener implements IncomingMessageListener{
             passenger.setLocation(location);
             order.setPassenger(passenger);
 			order.setPassenger(passenger);
+            order.setIncoming(true);
+            order.setProcessed(false);
 			manager.updateOrder(order);
 			/**
              *  TODO in Message should be amount of order and Destination Location

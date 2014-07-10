@@ -132,7 +132,7 @@ public class OrderManager {
     public List<PassengerOrder> getActiveOrders() {
 		logger.info("getting active orders");
 
-		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
+		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.processed = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
 	}
 
     public void createPassengerOrder(PassengerOrder passengerOrder) {
@@ -143,5 +143,9 @@ public class OrderManager {
         em.getTransaction().commit();
 
 		logger.info("created passenger order");
+    }
+
+    public List<PassengerOrder> getIncomingNotProcessedOrders() {
+        return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.incoming = TRUE AND o.processed = FALSE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
     }
 }

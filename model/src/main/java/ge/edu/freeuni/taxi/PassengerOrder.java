@@ -16,6 +16,10 @@ public class PassengerOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+    private boolean incoming;
+
+    private boolean processed;
+
 	@OneToOne
 	private Passenger passenger;
 
@@ -105,4 +109,20 @@ public class PassengerOrder implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+
+    public boolean isIncoming() {
+        return incoming;
+    }
+
+    public void setIncoming(boolean incoming) {
+        this.incoming = incoming;
+    }
+
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
+    }
 }

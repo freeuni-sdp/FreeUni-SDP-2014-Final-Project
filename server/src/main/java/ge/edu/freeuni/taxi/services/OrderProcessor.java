@@ -6,7 +6,7 @@ import ge.edu.freeuni.taxi.PassengerOrder;
 import java.util.List;
 
 /**
- * Created by taso on 7/10/14.
+ * Created by giorgi kochakidze on 7/10/14.
  */
 public class OrderProcessor {
 

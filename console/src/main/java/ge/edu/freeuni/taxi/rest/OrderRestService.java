@@ -43,31 +43,8 @@ public class OrderRestService {
     }
 
     @GET
-    public PassengerOrder getPassengerOrder() {
-        Passenger passenger = new Passenger();
-        passenger.setId(1000l);
-        passenger.setInfo("Passenger Location");
-        Location location = new Location();
-        location.setLatitude(1.1);
-        location.setLongitude(1.2);
-        location.setName("passenger location");
-        passenger.setLocation(location);
-        Driver driver = new Driver();
-        driver.setLocation(location);
-        driver.setName("driver");
-        driver.setId(2222l);
-        driver.setAvailable(true);
-        driver.setLastWorkingDate(new Date());
-        driver.setLocationLastUpdateTime(new Date());
-        driver.setWorking(true);
-        PassengerOrder order = new PassengerOrder();
-        order.setId(1l);
-        order.setAmount(100);
-        order.setCreateTime(new Date());
-        order.setDestination(location);
-        order.setDuration(100l);
-        order.setDriver(driver);
-        order.setPassenger(passenger);
-        return order;
+    @Path("/incoming")
+    public List<PassengerOrder> getIncomingOrders() {
+        return OrderManager.getInstance().getIncomingNotProcessedOrders();
     }
 }

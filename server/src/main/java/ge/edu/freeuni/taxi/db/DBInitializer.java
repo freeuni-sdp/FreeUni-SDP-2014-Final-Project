@@ -10,13 +10,13 @@ public class DBInitializer {
 
 	public static void main(String [] args) {
 		EntityManager em = EMFactory.createEM();
-		em.getTransaction().begin();
+        em.getTransaction().begin();
 		for (int i = 0; i < 10; i++) {
 			Driver driver = getDriver(getLocation(i), i);
 			em.persist(driver);
             Passenger passenger = getPassanger(getLocation(i), i);
             em.persist(passenger);
-            PassengerOrder passengerOrder = getPassangerOrder(passenger, driver, getLocation(i), i);
+            PassengerOrder passengerOrder = getPassengerOrder(passenger, driver, getLocation(i), i);
             em.persist(passengerOrder);
 		}
 		em.getTransaction().commit();
@@ -26,11 +26,15 @@ public class DBInitializer {
 		addInitialDistricts(em);
 	}
 
-    private static PassengerOrder getPassangerOrder(Passenger passenger, Driver driver, Location location, int i) {
+    private static PassengerOrder getPassengerOrder(Passenger passenger, Driver driver, Location location, int i) {
         PassengerOrder passengerOrder = new PassengerOrder();
         passengerOrder.setPassenger(passenger);
         if (i < 5) {
             passengerOrder.setDriver(driver);
+            passengerOrder.setProcessed(true);
+        } else {
+            passengerOrder.setProcessed(false);
+            passengerOrder.setIncoming(true);
         }
         passengerOrder.setDestination(location);
         passengerOrder.setCreateTime(new Date());
