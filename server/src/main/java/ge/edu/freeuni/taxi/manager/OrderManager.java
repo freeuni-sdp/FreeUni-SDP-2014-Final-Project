@@ -138,8 +138,7 @@ public class OrderManager {
     public void createPassengerOrder(PassengerOrder passengerOrder) {
         em.getTransaction().begin();
         em.merge(passengerOrder.getDriver());
-        em.persist(passengerOrder.getPassenger());
-        em.persist(passengerOrder);
+        em.merge(passengerOrder);
         em.getTransaction().commit();
 
 		logger.info("created passenger order");

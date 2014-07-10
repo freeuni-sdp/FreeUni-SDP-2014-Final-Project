@@ -29,18 +29,12 @@
         return processPromise($http.get('/api/orders/active'));
       }
 
-      var num = 0;
       /**
-       * @return {Array} Array of twitter orders.
+       * @return {Array} Array of incoming orders. In our case coming from
+       * twitter.
        */
-      function getTwitterOrders() {
-        var orders = [{
-          name: 'test ' + num++, location: 'Leselidze St'
-        }, {
-          name: 'test ' + num++, location: 'Budapest Street #13a'
-        }];
-        console.log('ontwitterorders');
-        return orders;
+      function getIncomingOrders() {
+        return processPromise($http.get('/api/orders/incoming'));
       }
 
       return {
@@ -48,8 +42,8 @@
           return getActiveOrders();
         },
 
-        getTwitterOrders: function() {
-          return getTwitterOrders();
+        getIncomingOrders: function() {
+          return getIncomingOrders();
         },
 
         onOrdersUpdate: function(callback) {
@@ -58,14 +52,13 @@
           }, 2000);
         },
 
-        onTwitterOrders: function(callback) {
+        onIncomingOrders: function(callback) {
           setInterval(function() {
-            callback(getTwitterOrders());
+            callback(getIncomingOrders());
           }, 2000);
         },
 
         add: function(order) {
-          console.log('add', order);
           $http.put('/api/orders', order);
         },
 

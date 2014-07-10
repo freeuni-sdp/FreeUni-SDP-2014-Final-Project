@@ -18,8 +18,6 @@ public class PassengerOrder implements Serializable {
 
     private boolean incoming;
 
-    private boolean processed;
-
 	@OneToOne
 	private Passenger passenger;
 
@@ -118,11 +116,4 @@ public class PassengerOrder implements Serializable {
         this.incoming = incoming;
     }
 
-    public boolean isProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(boolean processed) {
-        this.processed = processed;
-    }
 }

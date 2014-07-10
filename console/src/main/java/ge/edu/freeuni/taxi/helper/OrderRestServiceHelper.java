@@ -12,7 +12,7 @@ public class OrderRestServiceHelper {
         Driver driver = DriversManager.getInstance().getDriver(passengerOrder.getDriver().getId());
         passengerOrder.setDriver(driver);
         passengerOrder.setActive(true);
-        passengerOrder.setProcessed(true);
+        passengerOrder.setIncoming(false);
         passengerOrder.setCreateTime(new Date());
     }
 }

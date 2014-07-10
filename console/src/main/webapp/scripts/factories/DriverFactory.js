@@ -79,13 +79,12 @@
         },
 
         updateLocation: function(driverId, location) { // +
-            return processDriversPromise($http.put('/api/drivers/' +
-                driverId + '/location', location));
+          return processDriversPromise($http.put('/api/drivers/' +
+              driverId + '/location', location));
         },
 
         add: function(driver) {
-            return processDriversPromise($http.post('/api/drivers/',
-                driver));
+          return processDriversPromise($http.post('/api/drivers/', driver));
         }
       };
     });

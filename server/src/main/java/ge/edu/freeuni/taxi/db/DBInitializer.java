@@ -31,9 +31,7 @@ public class DBInitializer {
         passengerOrder.setPassenger(passenger);
         if (i < 5) {
             passengerOrder.setDriver(driver);
-            passengerOrder.setProcessed(true);
         } else {
-            passengerOrder.setProcessed(false);
             passengerOrder.setIncoming(true);
         }
         passengerOrder.setDestination(location);

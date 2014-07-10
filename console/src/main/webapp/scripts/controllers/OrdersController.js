@@ -7,57 +7,50 @@
   'use strict';
 
   angular.module('freeUniTaxiApp')
-    .controller('OrdersController', function(
-      $scope, OrderFactory, DriverFactory, OrderValidationService,
-      LocationValidationService) {
+    .controller('OrdersController', function($scope, OrderFactory,
+      DriverFactory, OrderValidationService, LocationValidationService) {
 
       function IncorrectInputException() {}
 
       $scope.activeOrders = [];
-      $scope.twitterOrders = [];
+      $scope.incomingOrders = [];
       $scope.drivers = [];
-      $scope.orderForm = {
-        destination: {},
-        passenger: {
-          location: {}
-        }
-      };
+      $scope.orderForm = {};
 
-      var operatorInput = { // TODO
-        phone: '',
+      var operatorInput = {
+        info: '',
         location: '',
+        destination: '',
+        amount: '',
         save: true
       };
 
       init();
 
       function init() {
-        $scope.twitterOrders = OrderFactory.getTwitterOrders(); // temp
-
         OrderFactory.getActiveOrders().then(function(res) {
           $scope.activeOrders = res.data;
         });
 
-        // OrderFactory.getTwitterOrders().then(function(orders) {
-        //   $scope.twitterOrders = orders;
-        // });
-
-        OrderFactory.onOrdersUpdate(function(ordersPromise) {
-          ordersPromise.then(function(res) {
-       //     console.log('onupdate', res);
-            $scope.activeOrders = res.data;
-            // $scope.$apply();
-          });
-        });
-
-        OrderFactory.onTwitterOrders(function(ordersPromise) {
-          $scope.twitterOrders = ordersPromise;
-          // $scope.$apply();
+        OrderFactory.getIncomingOrders().then(function(res) {
+          $scope.incomingOrders = res.data;
         });
 
         DriverFactory.getDrivers().then(function(res) {
           $scope.drivers = res.data;
           $scope.orderForm.driver = $scope.drivers[0];
+        });
+
+        OrderFactory.onOrdersUpdate(function(ordersPromise) {
+          ordersPromise.then(function(res) {
+            $scope.activeOrders = res.data;
+          });
+        });
+
+        OrderFactory.onIncomingOrders(function(ordersPromise) {
+          ordersPromise.then(function(res) {
+            $scope.incomingOrders = res.data;
+          });
         });
       }
 
@@ -88,47 +81,38 @@
       };
 
       $scope.addOrderWithMultipleDrivers = function() {
-        // try {
-        //   var client = getOrder(),
-        //       drivers = [];
-
-        //   var availableDrivers = $scope.orderForm.availableDrivers;
-
-        //   for (var i = 0; i < availableDrivers.length; i++) {
-        //     var driver = availableDrivers[i];
-        //     if (driver.checked) {
-        //       drivers.push(driver.name);
-        //     }
-        //   }
-
-        //   if (drivers.length === 0) {
-        //     alert('Choose at least one driver');
-        //     return;
-        //   }
-
-        //   OrderFactory.add({client: client, drivers: drivers});
-        //   clearFields();
-        // } catch(e) {}
+        try {
+          var order = getOrder();
+          order.drivers = getCheckedAvailableDrivers();
+          OrderFactory.addWithMultipleDrivers(order);
+          clearFields();
+        } catch(e) {}
       };
 
       $scope.toInputForm = function() {
-        var form = $scope.orderForm.client;
-        form.phone = operatorInput.phone;
+        var form = $scope.orderForm;
+        form.info = operatorInput.info;
         form.location = operatorInput.location;
-        $scope.orderForm.availableDrivers = [];
+        form.destination = operatorInput.destination;
+        form.amount = operatorInput.amount;
+        form.availableDrivers = [];
         operatorInput.save = true;
       };
 
-      $scope.toTwitterClientForm = function(order) {
-        var form = $scope.orderForm.client;
+      $scope.toIncomingClientForm = function(order) {
+        var form = $scope.orderForm;
         if (operatorInput.save) {
-          operatorInput.phone = form.phone;
+          operatorInput.info = form.info;
           operatorInput.location = form.location;
+          operatorInput.destination = form.destination;
+          operatorInput.amount = form.amount;
           operatorInput.save = false;
         }
-        form.phone = order.name;
-        form.location = order.location;
-        $scope.orderForm.availableDrivers = [];
+        form.info = order.passenger.info;
+        form.location = order.passenger.location.name;
+        form.destination = order.destination.name;
+        form.amount = order.amount;
+        form.availableDrivers = [];
       };
 
       /**
@@ -138,43 +122,67 @@
       function getOrder() {
         var form = $scope.orderForm;
 
-        if (!OrderValidationService.validatePhone(form.passenger.info)) {
+        if (!OrderValidationService.validatePhone(form.info)) {
           alert('Incorrect phone');
           throw new IncorrectInputException();
         }
 
-        if (!LocationValidationService.validate(form.passenger.location.name)) {
+        if (!LocationValidationService.validate(form.location)) {
           alert('Incorrect location');
           throw new IncorrectInputException();
         }
 
-        if (!LocationValidationService.validate(form.destination.name)) {
+        if (!LocationValidationService.validate(form.destination)) {
           alert('Incorrect destination');
           throw new IncorrectInputException();
         }
 
         return {
           passenger: {
-            info: form.passenger.info,
+            info: form.info,
             location: {
-              name: form.passenger.location.name
+              name: form.location
             }
           },
           destination: {
-            name: form.destination.name
+            name: form.destination
           },
           amount: form.amount
         };
       }
 
       /**
+       * @return {Array} Array of checked available drivers.
+       */
+      function getCheckedAvailableDrivers() {
+        var availableDrivers = $scope.orderForm.availableDrivers,
+            drivers = [];
+
+        for (var i = 0; i < availableDrivers.length; i++) {
+          var driver = availableDrivers[i];
+          if (driver.checked) {
+            drivers.push({ id: driver.id });
+          }
+        }
+
+        if (drivers.length === 0) {
+          alert('Choose at least one driver');
+          throw new IncorrectInputException();
+        }
+
+        return drivers;
+      }
+
+      /**
        * Clears input fields of client's phone and location.
        */
       function clearFields() {
-        var form = $scope.orderForm.client;
-        form.phone = '';
+        var form = $scope.orderForm;
+        form.info = '';
         form.location = '';
-        $scope.orderForm.availableDrivers = [];
+        form.destination = '';
+        form.amount = '';
+        form.availableDrivers = [];
         operatorInput = {};
       }
     });
