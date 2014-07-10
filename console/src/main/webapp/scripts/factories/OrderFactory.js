@@ -10,11 +10,10 @@
   angular.module('freeUniTaxiApp')
     .factory('OrderFactory', function($q, $http) {
 
-      function addOrder(url, order) {
-        var httpPromise = $http.post(url, order);
+      function processPromise(promise) {
         var deferred = $q.defer();
 
-        httpPromise.then(function(res) {
+        promise.then(function(res) {
           deferred.resolve(res);
         }, function(err) {
           console.error(err);
@@ -23,30 +22,11 @@
         return deferred.promise;
       }
 
-      var amount = 0;
       /**
        * @return {Array} Array of active order objects.
        */
       function getActiveOrders() {
-        var orders = [];
-        for (var i = 0; i < 20; i++) {
-          orders.push({
-            amount: amount++,
-            destination: {
-              name: 'location'
-            },
-            driver: {
-              name: 'drivertwo'
-            },
-            passenger: {
-              info: 'passenger 1',
-              location: {
-              }
-            }
-          });
-        }
-        console.log('getActiveOrders');
-        return orders;
+        return processPromise($http.get('/api/orders/active'));
       }
 
       var num = 0;
@@ -79,19 +59,18 @@
         },
 
         onTwitterOrders: function(callback) {
-          setInterval(function() {// TODO in one function maybe
+          setInterval(function() {
             callback(getTwitterOrders());
           }, 2000);
         },
 
         add: function(order) {
           console.log('add', order);
-          return addOrder('/api/orders/tweet', order);
+          $http.put('/api/orders', order);
         },
 
-        addWithDriver: function(order) {
-          console.log('addWithDriver', order);
-          return addOrder('api/orders', order);
+        addWithMultipleDrivers: function(order) {
+          console.log('addWithMultipleDrivers', order);
         }
       };
     });
