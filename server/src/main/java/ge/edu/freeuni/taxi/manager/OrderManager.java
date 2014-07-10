@@ -6,7 +6,6 @@ import ge.edu.freeuni.taxi.db.EMFactory;
 import org.hibernate.loader.custom.NonUniqueDiscoveredSqlAliasException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
