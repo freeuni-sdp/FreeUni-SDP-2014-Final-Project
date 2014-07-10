@@ -20,7 +20,7 @@ import java.util.List;
 @Path("/orders")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class OrderService {
+public class OrderRestService {
 
     @GET
     @Path("/active")

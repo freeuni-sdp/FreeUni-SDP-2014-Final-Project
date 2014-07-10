@@ -24,7 +24,6 @@ public class DBInitializer {
     	ScheduleManager manager = ScheduleManager.getInstance();
 
 		addInitialDistricts(em);
-
 	}
 
     private static PassengerOrder getPassangerOrder(Passenger passenger, Driver driver, Location location, int i) {
