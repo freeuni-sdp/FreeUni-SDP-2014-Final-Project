@@ -23,7 +23,7 @@
         }
       };
 
-      var operatorInput = {
+      var operatorInput = { // TODO
         phone: '',
         location: '',
         save: true

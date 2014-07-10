@@ -132,13 +132,13 @@ public class OrderManager {
     public List<PassengerOrder> getActiveOrders() {
 		logger.info("getting active orders");
 
-		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE", PassengerOrder.class).getResultList();
+		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
 	}
 
     public void createPassengerOrder(PassengerOrder passengerOrder) {
         em.getTransaction().begin();
-        em.persist(passengerOrder.getDriver());
-        em.merge(passengerOrder.getPassenger());
+        em.merge(passengerOrder.getDriver());
+        em.persist(passengerOrder.getPassenger());
         em.persist(passengerOrder);
         em.getTransaction().commit();
 

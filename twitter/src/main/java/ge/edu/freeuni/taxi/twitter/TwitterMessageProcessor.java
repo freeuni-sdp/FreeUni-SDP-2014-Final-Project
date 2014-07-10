@@ -6,6 +6,8 @@ import ge.edu.freeuni.taxi.core.MessageProcessor;
 import ge.edu.freeuni.taxi.core.MessageListener;
 import ge.edu.freeuni.taxi.core.Location;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.TwitterFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterStreamFactory;
@@ -26,6 +28,8 @@ import twitter4j.StallWarning;
  */
 public class TwitterMessageProcessor extends MessageProcessor {
     private static final String TAG_TO_LISTEN_TO = "#freeunitaxi";
+
+	private Logger logger = LoggerFactory.getLogger(TwitterMessageProcessor.class);
 
     private final Twitter twitter;
     private final TwitterMessageConverter twitterMessageConverter;
@@ -61,6 +65,7 @@ public class TwitterMessageProcessor extends MessageProcessor {
             StatusUpdate statusUpdate = getStatusUpdate(message);
             twitter.updateStatus(statusUpdate);
         } catch (RuntimeException | TwitterException e) {
+			logger.error("couldn't send message: " + message.getMessageType(), e);
             throw new RuntimeException("couldn't send message: " + message.getMessageType(), e);
         }
     }
@@ -107,7 +112,7 @@ public class TwitterMessageProcessor extends MessageProcessor {
             Message message = getMessage(status);
             notifyListeners(message);
         } catch (RuntimeException e) {
-            System.out.println("unable to parse tweet: " + status.getText());
+            logger.error("unable to parse tweet: " + status.getText(), e);
         }
     }
 
