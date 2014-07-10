@@ -15,8 +15,7 @@
         home: $('#homeButton'),
         driver: $('#driverButton'),
         orders: $('#ordersButton'),
-        location: $('#locationButton'),
-        test2: $('#test2Button'),
+        location: $('#locationButton')
       };
 
       for (var i in buttons) {

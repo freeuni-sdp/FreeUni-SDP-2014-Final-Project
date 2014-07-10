@@ -37,14 +37,14 @@
         for (var i = 0; i < drivers.length; i++) {
           var driver = drivers[i];
 
-          var d = new Date(driver.location.last_update),
+          var d = new Date(driver.locationLastUpdateTime),
               date = d.getDate(),
               month = d.getMonth(),
               year = d.getFullYear(),
               hours = d.getHours(),
               minutes = d.getMinutes();
 
-          driver.location.last_update = (hours + ":" + minutes +
+          driver.locationLastUpdateTime = (hours + ":" + minutes +
               "    " + date + "/" + month + "/" + year);
         }
       }
@@ -75,13 +75,18 @@
 
         update: function(driver) {
           return processDriversPromise($http.put('/api/drivers/' +
-            driver.name, driver));
+              driver.name, driver));
+        },
+
+        updateLocation: function(driverId, location) { // +
+            return processDriversPromise($http.put('/api/drivers/' +
+                driverId + '/location', location));
         },
 
         add: function(driver) {
             return processDriversPromise($http.post('/api/drivers/',
-              driver));
-          }
+                driver));
+        }
       };
     });
 })();

@@ -28,13 +28,13 @@ public class DriverRestService {
     @GET
     @Path("/working")
     public List<Driver> getWorkingDrivers() {
-        return DriversManager.getInstance().getAvailableDrivers();
+        return DriversManager.getInstance().getWorkingDrivers();
     }
 
     @GET
     @Path("/available")
     public List<Driver> getAvailableDrivers() {
-        return DriversManager.getInstance().getWorkingDrivers();
+        return DriversManager.getInstance().getAvailableDrivers();
     }
 
     @POST
@@ -55,7 +55,8 @@ public class DriverRestService {
 
     @PUT
     @Path("{driverId}/location")
-    public Driver updateDriverLocation(@PathParam("{driverId}")long driverId, Location location) {
-        return DriversManager.getInstance().updateDriverLocation(driverId, location);
+    public List<Driver> updateDriverLocation(@PathParam("driverId")Long driverId, Location location) {
+        DriversManager.getInstance().updateDriverLocation(driverId, location);
+        return DriversManager.getInstance().getAllDrivers();
     }
 }

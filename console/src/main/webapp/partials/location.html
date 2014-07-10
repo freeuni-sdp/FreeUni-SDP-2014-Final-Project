@@ -53,7 +53,7 @@
               <tr ng-repeat="driver in drivers | filter:filter.driver | orderBy:driver.name" >
                 <td>{{ driver.name | uppercase }}</td>
                 <td>{{ driver.location.name }}</td>
-                <td>{{ driver.location.last_update }}</td>
+                <td>{{ driver.locationLastUpdateTime }}</td>
               </tr>
             </tbody>
           </table>

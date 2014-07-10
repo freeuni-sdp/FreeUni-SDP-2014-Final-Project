@@ -83,7 +83,6 @@ public class DriversManager {
         driver.setLocation(location);
         em.merge(driver);
         em.getTransaction().commit();
-
 		IncomeManager.getInstance().adjustDriverIncome(driver);
 		return driver;
     }
