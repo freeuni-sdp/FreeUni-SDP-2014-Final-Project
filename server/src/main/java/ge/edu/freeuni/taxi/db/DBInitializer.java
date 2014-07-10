@@ -1,8 +1,6 @@
 package ge.edu.freeuni.taxi.db;
 
-import ge.edu.freeuni.taxi.District;
-import ge.edu.freeuni.taxi.Driver;
-import ge.edu.freeuni.taxi.Location;
+import ge.edu.freeuni.taxi.*;
 import ge.edu.freeuni.taxi.manager.ScheduleManager;
 
 import javax.persistence.EntityManager;
@@ -14,30 +12,59 @@ public class DBInitializer {
 		EntityManager em = EMFactory.createEM();
 		em.getTransaction().begin();
 		for (int i = 0; i < 10; i++) {
-			Driver driver = new Driver();
-
-			Location location = new Location();
-			location.setName("Location #" + i);
-			location.setLatitude(4000l + i * 100);
-			location.setLongitude(4200l + i * 100);
-
-			driver.setLocation(location);
-			driver.setAvailable(true);
-			driver.setName("Driver #" + i);
-			driver.setLastWorkingDate(new Date());
-			driver.setLocationLastUpdateTime(new Date());
-
+			Driver driver = getDriver(getLocation(i), i);
 			em.persist(driver);
+            Passenger passenger = getPassanger(getLocation(i), i);
+            em.persist(passenger);
+            PassengerOrder passengerOrder = getPassangerOrder(passenger, driver, getLocation(i), i);
+            em.persist(passengerOrder);
 		}
 		em.getTransaction().commit();
 		EMFactory.close();
-		ScheduleManager manager = ScheduleManager.getInstance();
+    	ScheduleManager manager = ScheduleManager.getInstance();
 
 		addInitialDistricts(em);
-
 	}
 
-	private static void addInitialDistricts(EntityManager em) {
+    private static PassengerOrder getPassangerOrder(Passenger passenger, Driver driver, Location location, int i) {
+        PassengerOrder passengerOrder = new PassengerOrder();
+        passengerOrder.setPassenger(passenger);
+        if (i < 5) {
+            passengerOrder.setDriver(driver);
+        }
+        passengerOrder.setDestination(location);
+        passengerOrder.setCreateTime(new Date());
+        passengerOrder.setAmount(10);
+        passengerOrder.setActive(true);
+        return passengerOrder;
+    }
+
+    private static Passenger getPassanger(Location location, int i) {
+        Passenger passenger = new Passenger();
+        passenger.setLocation(location);
+        passenger.setInfo("Passenger" + i);
+        return passenger;
+    }
+
+    private static Driver getDriver(Location location, int i) {
+        Driver driver = new Driver();
+        driver.setLocation(location);
+        driver.setAvailable(true);
+        driver.setName("Driveriiiii #" + i);
+        driver.setLastWorkingDate(new Date());
+        driver.setLocationLastUpdateTime(new Date());
+        return driver;
+    }
+
+    private static Location getLocation(int i) {
+        Location location = new Location();
+        location.setName("Location #" + i);
+        location.setLatitude(4000l + i * 100);
+        location.setLongitude(4200l + i * 100);
+        return location;
+    }
+
+    private static void addInitialDistricts(EntityManager em) {
 		em.getTransaction().begin();
 
 		District vakeSaburtalo = new District();
