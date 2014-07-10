@@ -3,6 +3,8 @@ package ge.edu.freeuni.taxi.manager;
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -19,6 +21,8 @@ public class IncomeManager {
 	}
 
 	private EntityManager em;
+
+	private Logger logger = LoggerFactory.getLogger(IncomeManager.class);
 
 	private IncomeManager() {
 		em = EMFactory.createEM();
@@ -41,5 +45,6 @@ public class IncomeManager {
 		}
 
 		driver.setIncome(income);
+		logger.info("adjusted driver income, driver id = '" + driver.getId() + "', income = '" + income + "'");
 	}
 }

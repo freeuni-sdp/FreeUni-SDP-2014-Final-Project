@@ -2,6 +2,8 @@ package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.db.EMFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,8 @@ public class ScheduleManager {
 	private static ScheduleManager instance;
 
 	private EntityManager em;
+
+	private Logger logger = LoggerFactory.getLogger(ScheduleManager.class);
 
 	public static ScheduleManager getInstance() {
 		if (instance == null) {
@@ -30,7 +34,7 @@ public class ScheduleManager {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("aaa");
+				logger.info("started scheduled task - scheduling drivers...");
 				controlWorkersSchedule();
 			}
 		};

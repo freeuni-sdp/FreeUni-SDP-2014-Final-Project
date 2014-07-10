@@ -6,6 +6,8 @@ import ge.edu.freeuni.taxi.manager.OrderManager;
 import ge.edu.freeuni.taxi.manager.DistrictManager;
 import ge.edu.freeuni.taxi.manager.DriversManager;
 import ge.edu.freeuni.taxi.District;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ScheduleAdvisor {
+
+	private Logger logger = LoggerFactory.getLogger(ScheduleAdvisor.class);
 
 	OrderManager orderManager = OrderManager.getInstance();
 	DistrictManager districtManager = DistrictManager.getInstance();
@@ -24,6 +28,8 @@ public class ScheduleAdvisor {
 	 * @return advice
 	 */
 	public SchedulingAdvice getAdvise() {
+		logger.info("getting scheduling advise");
+
 		SchedulingAdvice advice = new SchedulingAdvice();
 		Map<District, List<PassengerOrder>> ordersByArea = new HashMap<>();
 		int allOrders = 0;
