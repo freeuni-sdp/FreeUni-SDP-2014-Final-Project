@@ -45,6 +45,6 @@ public class OrderRestService {
     @GET
     @Path("/incoming")
     public List<PassengerOrder> getIncomingOrders() {
-        return OrderManager.getInstance().getIncomingNotProcessedOrders();
+        return OrderManager.getInstance().getIncomingOrders();
     }
 }

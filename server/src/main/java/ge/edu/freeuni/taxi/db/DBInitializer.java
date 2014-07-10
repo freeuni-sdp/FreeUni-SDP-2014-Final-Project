@@ -51,7 +51,12 @@ public class DBInitializer {
     private static Driver getDriver(Location location, int i) {
         Driver driver = new Driver();
         driver.setLocation(location);
-        driver.setAvailable(true);
+        if (i < 5) {
+            driver.setAvailable(false);
+        } else {
+            driver.setAvailable(true);
+        }
+        driver.setWorking(true);
         driver.setName("Driveriiiii #" + i);
         driver.setLastWorkingDate(new Date());
         driver.setLocationLastUpdateTime(new Date());

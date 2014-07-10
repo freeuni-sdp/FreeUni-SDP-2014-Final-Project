@@ -132,19 +132,26 @@ public class OrderManager {
     public List<PassengerOrder> getActiveOrders() {
 		logger.info("getting active orders");
 
-		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.processed = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
+		return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.incoming = FALSE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
 	}
 
     public void createPassengerOrder(PassengerOrder passengerOrder) {
         em.getTransaction().begin();
+        passengerOrder.getDriver().setAvailable(false);
         em.merge(passengerOrder.getDriver());
-        em.merge(passengerOrder);
+        if (passengerOrder.isIncoming()) {
+            passengerOrder.setIncoming(false);
+            em.merge(passengerOrder);
+        } else {
+            em.persist(passengerOrder.getPassenger());
+            em.persist(passengerOrder);
+        }
         em.getTransaction().commit();
 
 		logger.info("created passenger order");
     }
 
-    public List<PassengerOrder> getIncomingNotProcessedOrders() {
-        return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.incoming = TRUE AND o.processed = FALSE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
+    public List<PassengerOrder> getIncomingOrders() {
+        return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.incoming = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
     }
 }
