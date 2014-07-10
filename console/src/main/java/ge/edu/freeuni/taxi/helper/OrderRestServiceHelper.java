@@ -14,6 +14,7 @@ public class OrderRestServiceHelper {
     public static void modifyPassengerOrderAndAssignDriver(PassengerOrder passengerOrder) {
         Driver driver = DriversManager.getInstance().getDriver(passengerOrder.getDriver().getId());
         passengerOrder.setDriver(driver);
+        passengerOrder.setActive(true);
         passengerOrder.setCreateTime(new Date());
     }
 }
