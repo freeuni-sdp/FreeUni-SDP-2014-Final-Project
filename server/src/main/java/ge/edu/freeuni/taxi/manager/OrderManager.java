@@ -1,6 +1,7 @@
 package ge.edu.freeuni.taxi.manager;
 
 import ge.edu.freeuni.taxi.District;
+import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.db.EMFactory;
 import org.hibernate.loader.custom.NonUniqueDiscoveredSqlAliasException;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import java.util.Date;
@@ -122,7 +124,7 @@ public class OrderManager {
 		Query query = em.createQuery("SELECT o FROM PassengerOrder o WHERE o.passenger.info = :name",PassengerOrder.class).setParameter("name", passengerName);
 		try {
 			return (PassengerOrder) query.getSingleResult();
-		} catch (NonUniqueDiscoveredSqlAliasException ex) {
+		} catch (NonUniqueResultException ex) {
 
 			logger.error("there are many orders by that passenger (passenger name is " + passengerName +")");
 			return (PassengerOrder)query.getResultList().get(0);
@@ -137,18 +139,29 @@ public class OrderManager {
 
     public void createPassengerOrder(PassengerOrder passengerOrder) {
         em.getTransaction().begin();
-        passengerOrder.getDriver().setAvailable(false);
-        em.merge(passengerOrder.getDriver());
-        if (passengerOrder.isIncoming()) {
-            passengerOrder.setIncoming(false);
-            em.merge(passengerOrder);
-        } else {
+        if (passengerOrder.getId() == null) {
+            if (passengerOrder.getDriver() != null) {
+                Driver driver = updateDriver(passengerOrder);
+                passengerOrder.setDriver(driver);
+            }
             em.persist(passengerOrder.getPassenger());
             em.persist(passengerOrder);
+        } else {
+            PassengerOrder order = em.find(PassengerOrder.class, passengerOrder.getId());
+            order.setIncoming(false);
+            order.setDriver(updateDriver(passengerOrder));
+            em.merge(order);
         }
         em.getTransaction().commit();
 
 		logger.info("created passenger order");
+    }
+
+    private Driver updateDriver(PassengerOrder passengerOrder) {
+        Driver driver = em.find(Driver.class, passengerOrder.getDriver().getId());
+        driver.setAvailable(false);
+        em.merge(driver);
+        return driver;
     }
 
     public List<PassengerOrder> getIncomingOrders() {

@@ -59,6 +59,7 @@
         },
 
         add: function(order) {
+          console.log(order);
           $http.put('/api/orders', order);
         },
 
