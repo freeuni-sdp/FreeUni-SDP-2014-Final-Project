@@ -154,4 +154,23 @@ public class OrderManager {
     public List<PassengerOrder> getIncomingOrders() {
         return em.createQuery("SELECT o FROM PassengerOrder o WHERE o.active = TRUE AND o.incoming = TRUE ORDER BY o.createTime desc", PassengerOrder.class).getResultList();
     }
+
+    /**
+     * ითვლის მძღოლის "მარგი ქმედების კოეფიციენტს"
+     * @param driverID მძღოლის id
+     * @param from დრო, საიდანაც იწყება მქკ-ს დათვლა
+     * @param to დრო, სადამდეც ითვლება მქკ
+     * @return
+     */
+    public double getFactor(Long driverID, Date from, Date to) {
+        long sumWorkingMinutes = em.createQuery("SELECT SUM(o.duration) FROM PassengerOrder o " +
+                " WHERE o.driver.id =:driverID" +
+                " AND o.createTime BETWEEN :fromTime AND :toTime", Long.class)
+                .setParameter("driverID", driverID)
+                .setParameter("fromTime", from)
+                .setParameter("toTime", to)
+                .getSingleResult();
+
+        return sumWorkingMinutes / ( (to.getTime() - from.getTime()) / (1000 * 60));
+    }
 }
