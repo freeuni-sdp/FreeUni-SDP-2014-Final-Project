@@ -219,6 +219,7 @@ public class OrderManager {
     /**
      * ითვლის ტრანსაქციების საშუალო ხანგრძლივობას
      * გვიბრუნებს ტრანსაქციების საშუალო ხანგრძლივობას წუთებში
+     * 
      */
     public double getAverageTransactionDuration(){
         Query query = em.createQuery("SELECT SUM(o.duration) FROM PassengerOrder o");
