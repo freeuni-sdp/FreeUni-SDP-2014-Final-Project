@@ -149,6 +149,7 @@ public class OrderManager {
             passengerOrder.setCreateTime(new Date());
             em.persist(passengerOrder);
         } else {
+
             PassengerOrder order = em.find(PassengerOrder.class, passengerOrder.getId());
             order.setIncoming(false);
             order.setDriver(updateDriver(passengerOrder));
@@ -195,7 +196,7 @@ public class OrderManager {
         em.persist(passengerOrder.getPassenger());
         passengerOrder.setActive(true);
         passengerOrder.setCreateTime(new Date());
-        passengerOrder.setIncoming(true);
+        passengerOrder.setIncoming(false);
         em.persist(passengerOrder);
 
         em.getTransaction().commit();
