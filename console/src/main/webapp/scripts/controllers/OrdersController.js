@@ -22,7 +22,7 @@
         location: '',
         destination: '',
         amount: '',
-        save: true
+        isIncoming: false
       };
 
       init();
@@ -95,24 +95,23 @@
         form.location = operatorInput.location;
         form.destination = operatorInput.destination;
         form.amount = operatorInput.amount;
-        form.availableDrivers = [];
-        operatorInput.save = true;
+        operatorInput.isIncoming = false;
       };
 
       $scope.toIncomingClientForm = function(order) {
         var form = $scope.orderForm;
-        if (operatorInput.save) {
+        if (!operatorInput.isIncoming) {
           operatorInput.info = form.info;
           operatorInput.location = form.location;
           operatorInput.destination = form.destination;
           operatorInput.amount = form.amount;
-          operatorInput.save = false;
+          operatorInput.isIncoming = true;
         }
         form.info = order.passenger.info;
         form.location = order.passenger.location.name;
         form.destination = order.destination.name;
         form.amount = order.amount;
-        form.availableDrivers = [];
+        form.id = order.id;
       };
 
       /**
@@ -137,7 +136,7 @@
           throw new IncorrectInputException();
         }
 
-        return {
+        var order = {
           passenger: {
             info: form.info,
             location: {
@@ -149,6 +148,12 @@
           },
           amount: form.amount
         };
+
+        if (operatorInput.isIncoming) {
+          order.id = form.id;
+        }
+
+        return order;
       }
 
       /**
