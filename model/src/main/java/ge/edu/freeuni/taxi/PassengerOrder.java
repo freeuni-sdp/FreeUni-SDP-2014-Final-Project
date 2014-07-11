@@ -29,7 +29,7 @@ public class PassengerOrder implements Serializable {
 
 	private Date createTime;
 
-	private long duration;
+	private long duration;  //in minutes
 
 	private double amount;
 

@@ -177,12 +177,12 @@ public class OrderManager {
      */
     public double getFactor(Long driverID, Date from, Date to) {
         long sumWorkingMinutes = em.createQuery("SELECT SUM(o.duration) FROM PassengerOrder o " +
-                " WHERE o.driver.id =:driverID" +
-                " AND o.createTime BETWEEN :fromTime AND :toTime", Long.class)
-                .setParameter("driverID", driverID)
-                .setParameter("fromTime", from)
-                .setParameter("toTime", to)
-                .getSingleResult();
+                                                " WHERE o.driver.id =:driverID" +
+                                                " AND o.createTime BETWEEN :fromTime AND :toTime", Long.class)
+                                                .setParameter("driverID", driverID)
+                                                .setParameter("fromTime", from)
+                                                .setParameter("toTime", to)
+                                                .getSingleResult();
 
         return sumWorkingMinutes / ( (to.getTime() - from.getTime()) / (1000 * 60));
     }
