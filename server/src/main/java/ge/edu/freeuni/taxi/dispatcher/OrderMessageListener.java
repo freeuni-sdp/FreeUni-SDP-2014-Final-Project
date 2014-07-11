@@ -8,7 +8,7 @@ import ge.edu.freeuni.taxi.PassengerOrder;
 import ge.edu.freeuni.taxi.core.Message;
 import ge.edu.freeuni.taxi.manager.OrderManager;
 
-public class OrderMessageListener implements IncomingMessageListener{
+public class OrderMessageListener implements IncomingMessageListener {
 
 
     /**

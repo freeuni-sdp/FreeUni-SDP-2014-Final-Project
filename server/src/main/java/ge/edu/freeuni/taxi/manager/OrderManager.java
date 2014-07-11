@@ -208,11 +208,11 @@ public class OrderManager {
     /**
      * ითვლის ოპერატორის საშუალო დატვირთვას
      * გვიბრუნებს პერიოდში შემოსულ შეკვეთების რაოდენპბას
-     * @param operatorID ოპერატორის ID
      * @param startTime საწყისი დრო
      * @param  endTime  დასასრულის დრო
      * @return */
-    public long getOrderCount(Long operatorID, Date startTime, Date endTime) {
-        return 0;
+    public long getOrderCount(Date startTime, Date endTime) {
+        Query query = em.createQuery("SELECT COUNT(i.id) FROM PassengerOrder o WHERE o.createTime > :startTime AND o.createTime < :endTime").setParameter("startTime", startTime).setParameter("endTime", endTime);
+        return Long.valueOf(query.getFirstResult());
     }
 }

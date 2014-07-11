@@ -10,7 +10,7 @@ import ge.edu.freeuni.taxi.core.MessageListener;
 import ge.edu.freeuni.taxi.core.MessageProcessor;
 import ge.edu.freeuni.taxi.core.MessageType;
 
-public class MessageDispatcher implements MessageListener{
+public class MessageDispatcher implements MessageListener {
 	private List<MessageProcessor> messageProcessors;
 	private Map<MessageType, List<IncomingMessageListener>> incomingMessageListeners;
 	
