@@ -85,9 +85,12 @@
 
       $scope.addOrderWithMultipleDrivers = function() {
         try {
-          var order = getOrder();
-          order.drivers = getCheckedAvailableDrivers();
-          OrderFactory.addWithMultipleDrivers(order);
+          var order = getOrder(),
+              drivers = getCheckedAvailableDrivers();
+          OrderFactory.addWithMultipleDrivers({
+            order: order,
+            drivers: drivers
+          });
           clearFields();
         } catch(e) {}
       };
