@@ -85,7 +85,7 @@ public class TwitterMessageConverter {
             status.getId(),
             status.getUser().getScreenName(),
             getLocation(status.getGeoLocation()),
-            getAddress(status.getText()),
+            getDestination(status.getText()),
             getFare(status.getText())
         );
     }
@@ -98,7 +98,7 @@ public class TwitterMessageConverter {
         }
     }
 
-    private String getAddress(String tweet) {
+    private String getDestination(String tweet) {
         return tweet.split(", ")[1];
     }
 
