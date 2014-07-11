@@ -1,13 +1,22 @@
 package ge.edu.freeuni.taxi.twitter;
 
+import ge.edu.freeuni.taxi.core.Location;
 import ge.edu.freeuni.taxi.core.MessageType;
+import ge.edu.freeuni.taxi.core.Message;
+import ge.edu.freeuni.taxi.core.OrderMessage;
+
+import twitter4j.GeoLocation;
+import twitter4j.Status;
 
 /**
  * @author Sandro Dolidze
  *
  * Small utility class used for converting twitter messages for message types and vice-versa
+ *
+ * format used for ordering taxi is - "#freeunitaxi order taxi, ${address}, ${fare}"
  */
 public class TwitterMessageConverter {
+
     private static class Pair {
         public final String pattern;
         public final MessageType messageType;
@@ -45,5 +54,55 @@ public class TwitterMessageConverter {
         }
 
         throw new RuntimeException("unable to format message type: " + messageType);
+    }
+
+    public Message parseMessage(Status status) {
+        try {
+            MessageType messageType = parseMessageType(status.getText());
+
+            if (messageType == MessageType.CLIENT_ORDERED) {
+                return getOrderMessage(status);
+            } else {
+                return getNormalMessage(status);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("unable to parse tweet", e);
+        }
+    }
+
+    private Message getNormalMessage(Status status) {
+        return new Message(
+                status.getId(),
+                status.getUser().getScreenName(),
+                parseMessageType(status.getText()),
+                getLocation(status.getGeoLocation()),
+                status.getInReplyToStatusId() // if status is not a reply -1 (Message.NOT_REPLY) is returned
+        );
+    }
+
+    private Message getOrderMessage(Status status) {
+        return new OrderMessage(
+            status.getId(),
+            status.getUser().getScreenName(),
+            getLocation(status.getGeoLocation()),
+            getAddress(status.getText()),
+            getFare(status.getText())
+        );
+    }
+
+    private Location getLocation(GeoLocation geoLocation) {
+        if (geoLocation == null) {
+            return null;
+        } else {
+            return new Location(geoLocation.getLatitude(), geoLocation.getLongitude());
+        }
+    }
+
+    private String getAddress(String tweet) {
+        return tweet.split(", ")[1];
+    }
+
+    private double getFare(String tweet) {
+        return Double.parseDouble(tweet.split(", ")[2]);
     }
 }

@@ -1,13 +1,9 @@
 package ge.edu.freeuni.taxi.twitter;
 
-
 import ge.edu.freeuni.taxi.core.Message;
 import ge.edu.freeuni.taxi.core.MessageProcessor;
 import ge.edu.freeuni.taxi.core.MessageListener;
-import ge.edu.freeuni.taxi.core.Location;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import twitter4j.TwitterFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterStreamFactory;
@@ -16,10 +12,12 @@ import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 import twitter4j.FilterQuery;
 import twitter4j.Status;
-import twitter4j.GeoLocation;
 import twitter4j.StatusListener;
 import twitter4j.StatusDeletionNotice;
 import twitter4j.StallWarning;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Sandro Dolidze
@@ -52,31 +50,27 @@ public class TwitterMessageProcessor extends MessageProcessor {
     }
 
     /**
-     * BEWARE: message listener is called from another thread
+     * BEWARE: message listener is called from another thread.
+     * same thread is used for every status update, so don't block it for too long.
      */
     @Override
     public void addIncomingMessageListener(MessageListener messageListener) {
         super.addIncomingMessageListener(messageListener);
     }
 
+    /**
+     * sends given message with tweeter and returns tweet id
+     */
     @Override
-    public void sendOutgoingMessage(Message message) {
+    public long sendOutgoingMessage(Message message) {
         try {
             StatusUpdate statusUpdate = getStatusUpdate(message);
-            twitter.updateStatus(statusUpdate);
+            Status status = twitter.updateStatus(statusUpdate);
+            return status.getId();
         } catch (RuntimeException | TwitterException e) {
 			logger.error("couldn't send message: " + message.getMessageType(), e);
             throw new RuntimeException("couldn't send message: " + message.getMessageType(), e);
         }
-    }
-
-    private StatusUpdate getStatusUpdate(Message message) {
-        String status = twitterMessageConverter.formatMessageType(message.getMessageType());
-        StatusUpdate statusUpdate = new StatusUpdate(status);
-        if (message.isReply()) {
-            statusUpdate.setInReplyToStatusId(message.getInReplyToMessageId());
-        }
-        return statusUpdate;
     }
 
     @Override
@@ -89,30 +83,21 @@ public class TwitterMessageProcessor extends MessageProcessor {
         twitterStream.filter(query);
     }
 
-    private Location getLocation(GeoLocation geoLocation) {
-        if (geoLocation == null) {
-            return null;
-        } else {
-            return new Location(geoLocation.getLatitude(), geoLocation.getLongitude());
+    private StatusUpdate getStatusUpdate(Message message) {
+        String status = twitterMessageConverter.formatMessageType(message.getMessageType());
+        StatusUpdate statusUpdate = new StatusUpdate(status);
+        if (message.isReply()) {
+            statusUpdate.setInReplyToStatusId(message.getInReplyToMessageId());
         }
-    }
-
-    private Message getMessage(Status status) {
-        return new Message(
-            status.getId(),
-            status.getUser().getScreenName(),
-            twitterMessageConverter.parseMessageType(status.getText()),
-            getLocation(status.getGeoLocation()),
-            status.getInReplyToStatusId() // if status is not a reply -1 is returned
-        );
+        return statusUpdate;
     }
 
     private void notifyListeners(Status status) {
         try {
-            Message message = getMessage(status);
+            Message message = twitterMessageConverter.parseMessage(status);
             notifyListeners(message);
         } catch (RuntimeException e) {
-            logger.error("unable to parse tweet: " + status.getText(), e);
+            logger.warn("unable to parse tweet: " + status.getText(), e);
         }
     }
 

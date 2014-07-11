@@ -11,8 +11,8 @@ import ge.edu.freeuni.taxi.util.MockMessageProcessor;
  */
 public class TwitterMessageProcessorDemo {
     public static void main(String[] args) {
-        //testTwitter();
-        testMock();
+        testTwitter();
+        //testMock();
     }
 
     public static void testTwitter() {

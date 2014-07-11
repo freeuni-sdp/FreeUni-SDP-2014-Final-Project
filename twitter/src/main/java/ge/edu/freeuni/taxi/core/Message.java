@@ -4,7 +4,7 @@ package ge.edu.freeuni.taxi.core;
  * @author Sandro Dolidze
  */
 public class Message {
-    private static final long NOT_REPLY = -1;
+    public static final long NOT_REPLY = -1;
 
     private final long id;
     private final String sender;

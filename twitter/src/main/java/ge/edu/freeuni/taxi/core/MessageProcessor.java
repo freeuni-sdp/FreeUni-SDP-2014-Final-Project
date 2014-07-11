@@ -37,7 +37,10 @@ public abstract class MessageProcessor {
         }
     }
 
-    public abstract void sendOutgoingMessage(Message message);
+    /**
+     * send message via processor and return sent message id
+     */
+    public abstract long sendOutgoingMessage(Message message);
 
 	public abstract void listenToStream();
 
