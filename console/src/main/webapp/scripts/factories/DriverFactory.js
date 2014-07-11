@@ -10,8 +10,6 @@
   angular.module('freeUniTaxiApp')
     .factory('DriverFactory', function($q, $http) {
 
-      var drivers = [];
-
       /**
        * Helper function that calls provided promise and notifies client.
        * Because the response object is a list of drivers, formats them (time).
@@ -54,23 +52,8 @@
           return processDriversPromise($http.get('/api/drivers'));
         },
 
-        // TODO test
         getAvailableDrivers: function() {
-          var date = new Date('11/4/2012').getTime(),
-              availableDrivers = [
-                { name: 'driverone', location: {
-                  name:'Kandelaki Street', last_update: date } },
-                { name: 'drivertwo', location: {
-                  name: 'Budapest Street #13a', last_update: date } },
-                { name: 'driverthree', location: {
-                  name: 'Leselidze St', last_update: date } },
-                { name: 'driverfour', location: {
-                  name: 'Rustaveli, Kostava Str', last_update: date } },
-                { name: 'driverfive', location: {
-                  name: 'Irakli Abashidze Street', last_update: date } }
-              ];
-
-          return availableDrivers;
+          return processDriversPromise($http.get('/api/drivers/available'));
         },
 
         update: function(driver) {

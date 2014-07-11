@@ -55,20 +55,22 @@
       }
 
       $scope.getAvailableDrivers = function() {
-        $scope.orderForm.availableDrivers = [];
+        DriverFactory.getAvailableDrivers().then(function(res) {
+          $scope.orderForm.availableDrivers = [];
 
-        var availableDrivers = DriverFactory.getAvailableDrivers();
+          var availableDrivers = res.data;
 
-        for (var i = 0; i < availableDrivers.length; i++) {
-          var driver = availableDrivers[i];
-          $scope.orderForm.availableDrivers.push({
-            name: driver.name,
-            location: driver.location.name,
-            checked: true
-          });
-        }
+          for (var i = 0; i < availableDrivers.length; i++) {
+            var driver = availableDrivers[i];
+            $scope.orderForm.availableDrivers.push({
+              name: driver.name,
+              location: driver.location.name,
+              checked: true
+            });
+          }
 
-        console.log($scope.orderForm.availableDrivers);
+          console.log($scope.orderForm.availableDrivers);
+        });
       };
 
       $scope.addOrder = function() {
