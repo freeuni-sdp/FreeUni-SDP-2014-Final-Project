@@ -4,9 +4,10 @@ import ge.edu.freeuni.taxi.Driver;
 import ge.edu.freeuni.taxi.Location;
 import ge.edu.freeuni.taxi.Passenger;
 import ge.edu.freeuni.taxi.PassengerOrder;
-import ge.edu.freeuni.taxi.helper.OrderRestServiceHelper;
 import ge.edu.freeuni.taxi.manager.DriversManager;
 import ge.edu.freeuni.taxi.manager.OrderManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,7 +33,6 @@ public class OrderRestService {
 
     @PUT
     public void createPassengerOrderAndAssignDriver(PassengerOrder passengerOrder) {
-        OrderRestServiceHelper.modifyPassengerOrderAndAssignDriver(passengerOrder);
         OrderManager.getInstance().createPassengerOrder(passengerOrder);
     }
 
