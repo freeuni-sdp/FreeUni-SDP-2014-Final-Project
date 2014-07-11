@@ -51,10 +51,11 @@ public class MockMessageProcessor extends MessageProcessor {
      * Instead, outgoingMessageListener is called if such exists.
      */
     @Override
-    public void sendOutgoingMessage(Message message) {
+    public long sendOutgoingMessage(Message message) {
         if (outgoingMessageListener != null) {
             outgoingMessageListener.onMessage(message);
         }
+        return -1;
     }
 
 	@Override
