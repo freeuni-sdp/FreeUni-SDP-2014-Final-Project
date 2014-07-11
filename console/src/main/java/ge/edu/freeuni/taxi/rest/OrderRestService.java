@@ -38,8 +38,10 @@ public class OrderRestService {
 
     @PUT
     @Path("/multiple_drivers")
-    public void createPassengerOrderAndNotifyDrivers(PassengerOrder passengerOrder, List<Driver> drivers) {
-
+    public void createPassengerOrderAndNotifyDrivers(PassengerOrderWrapper wrapper) {
+        if (wrapper.getOrder().getId() == null)
+            OrderManager.getInstance().createOrderWithoutDriver(wrapper.getOrder());
+        //TODO someone have to notify twitter drivers via twitter api, but that someone doesn't exist :D
     }
 
     @GET

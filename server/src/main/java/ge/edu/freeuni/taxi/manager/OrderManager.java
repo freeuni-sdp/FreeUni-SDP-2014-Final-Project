@@ -188,4 +188,18 @@ public class OrderManager {
 
         return sumWorkingMinutes / ( (to.getTime() - from.getTime()) / (1000 * 60));
     }
+
+    public void createOrderWithoutDriver(PassengerOrder passengerOrder) {
+        em.getTransaction().begin();
+
+        em.persist(passengerOrder.getPassenger());
+        passengerOrder.setActive(true);
+        passengerOrder.setCreateTime(new Date());
+        passengerOrder.setIncoming(true);
+        em.persist(passengerOrder);
+
+        em.getTransaction().commit();
+
+        logger.info("created passenger order without driver");
+    }
 }
