@@ -215,4 +215,12 @@ public class OrderManager {
         Query query = em.createQuery("SELECT COUNT(i.id) FROM PassengerOrder o WHERE o.createTime > :startTime AND o.createTime < :endTime").setParameter("startTime", startTime).setParameter("endTime", endTime);
         return Long.valueOf(query.getFirstResult());
     }
+
+    /**
+     * ითვლის ტრანსაქციების საშუალო ხანგრძლივობას
+     * გვიბრუნებს ტრანსაქციების საშუალო ხანგრძლივობას წუთებში
+     */
+    public double getAverageTransactionDuration(){
+        return 0;
+    }
 }
