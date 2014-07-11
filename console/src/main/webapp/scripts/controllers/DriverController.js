@@ -17,29 +17,18 @@
           $scope.driverForm = {name: ''};
           DriverFactory.getDrivers().then(function(res) {
               $scope.drivers = res.data;
-              res.data.forEach(function(driver) {
-                  $('.driversT tbody').append('<tr>'+
-                      '<td class="nameC" align="middle"><input class="form-control" type="text" spellcheck="false" autocomplete="off" value="'+ driver.name +'" /></td>'+
-                      '<td class="incomeC" align="middle"><input class="form-control" type="text" spellcheck="false" autocomplete="off" value="'+ driver.income +'" /></td>'+
-                      '<td class="editC" align="center" valign="middle"><button class="btn btn-primary">Edit</button></td>'+
-                      '<td class="deleteC" align="center" valign="middle"><button class="btn btn-danger">Delete</button></td>'+
-                      '</tr>');
-              });
           });
 
           $scope.addDriver = function() {
-            var driver = {available: true, id: '', lastWorkingDate: '', location: {}, locationLastUpdateTime: '', name: $scope.driverForm.name, working: false};
+            var driver = {available: true, id: '', lastWorkingDate: '', location: {}, locationLastUpdateTime: '', name: $scope.driverForm.name, working: false, income: 0};
             DriverFactory.add(driver).then(function(res) {
-                var driver = res.data;
-                console.log(driver);
-                $('.driversT tbody').append('<tr>'+
-                    '<td class="nameC" align="middle"><input class="form-control" type="text" spellcheck="false" autocomplete="off" value="'+ driver.name +'" /></td>'+
-                    '<td class="incomeC" align="middle"><input class="form-control" type="text" spellcheck="false" autocomplete="off" value="'+ driver.income +'" /></td>'+
-                    '<td class="editC" align="center" valign="middle"><button class="btn btn-primary">Edit</button></td>'+
-                    '<td class="deleteC" align="center" valign="middle"><button class="btn btn-danger">Delete</button></td>'+
-                    '</tr>');
+                $scope.drivers.push(res.data);
                 $('.add_driver_input').val('');
             });
-          }
+          };
+
+          $scope.updateDriver = function() {
+
+          };
     });
 })();
