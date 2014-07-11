@@ -203,4 +203,16 @@ public class OrderManager {
 
         logger.info("created passenger order without driver");
     }
+
+
+    /**
+     * ითვლის ოპერატორის საშუალო დატვირთვას
+     * გვიბრუნებს პერიოდში შემოსულ შეკვეთების რაოდენპბას
+     * @param operatorID ოპერატორის ID
+     * @param startTime საწყისი დრო
+     * @param  endTime  დასასრულის დრო
+     * @return */
+    public long getOrderCount(Long operatorID, Date startTime, Date endTime) {
+        return 0;
+    }
 }
