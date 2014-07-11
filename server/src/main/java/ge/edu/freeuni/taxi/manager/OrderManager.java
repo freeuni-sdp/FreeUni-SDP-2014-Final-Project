@@ -212,7 +212,7 @@ public class OrderManager {
      * @param  endTime  დასასრულის დრო
      * @return */
     public long getOrderCount(Date startTime, Date endTime) {
-        Query query = em.createQuery("SELECT COUNT(i.id) FROM PassengerOrder o WHERE o.createTime > :startTime AND o.createTime < :endTime").setParameter("startTime", startTime).setParameter("endTime", endTime);
+        Query query = em.createQuery("SELECT COUNT(o.id) FROM PassengerOrder o WHERE o.createTime > :startTime AND o.createTime < :endTime").setParameter("startTime", startTime).setParameter("endTime", endTime);
         return Long.valueOf(query.getFirstResult());
     }
 
@@ -221,6 +221,8 @@ public class OrderManager {
      * გვიბრუნებს ტრანსაქციების საშუალო ხანგრძლივობას წუთებში
      */
     public double getAverageTransactionDuration(){
-        return 0;
+        Query query = em.createQuery("SELECT SUM(o.duration) FROM PassengerOrder o");
+        Query count = em.createQuery("SELECT COUNT(o.id) FROM PassengerOrder o");
+        return (double) query.getFirstResult() / count.getFirstResult();
     }
 }
