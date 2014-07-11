@@ -145,6 +145,8 @@ public class OrderManager {
                 passengerOrder.setDriver(driver);
             }
             em.persist(passengerOrder.getPassenger());
+            passengerOrder.setActive(true);
+            passengerOrder.setCreateTime(new Date());
             em.persist(passengerOrder);
         } else {
             PassengerOrder order = em.find(PassengerOrder.class, passengerOrder.getId());
