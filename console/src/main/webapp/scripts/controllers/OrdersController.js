@@ -63,6 +63,7 @@
           for (var i = 0; i < availableDrivers.length; i++) {
             var driver = availableDrivers[i];
             $scope.orderForm.availableDrivers.push({
+              id: driver.id,
               name: driver.name,
               location: driver.location.name,
               checked: true
@@ -164,6 +165,7 @@
       function getCheckedAvailableDrivers() {
         var availableDrivers = $scope.orderForm.availableDrivers,
             drivers = [];
+        console.log(availableDrivers);
 
         for (var i = 0; i < availableDrivers.length; i++) {
           var driver = availableDrivers[i];

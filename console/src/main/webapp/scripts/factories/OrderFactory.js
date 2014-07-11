@@ -59,12 +59,13 @@
         },
 
         add: function(order) {
-          console.log(order);
+          console.log('add', order);
           $http.put('/api/orders', order);
         },
 
         addWithMultipleDrivers: function(order) {
           console.log('addWithMultipleDrivers', order);
+          $http.put('/api/orders/multiple_drivers', order);
         }
       };
     });
