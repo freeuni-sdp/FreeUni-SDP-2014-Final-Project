@@ -42,10 +42,16 @@
             });
           };
 
-          $scope.deleteDriver = function(id) {
-            DriverFactory.remove(id).then(function() {
-               console.log('deleted ' + id);
-            });
+          $scope.deleteDriver = function(event) {
+            var element = angular.element(event.srcElement);
+            var id = $(element).parent().parent().find('.driverID').val();
+//            DriverFactory.remove(id);
+            for (var i = 0; i < $scope.drivers.length; i++) {
+                if ($scope.drivers[i].id == id) {
+                    $scope.drivers.splice(i, 1);
+                    break;
+                }
+            }
           };
     });
 })();
