@@ -20,10 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Sandro Dolidze
- *
- * Twitter implementation of MessageProcessor
- */
+* @author Sandro Dolidze
+*
+* Twitter implementation of MessageProcessor
+*/
 public class TwitterMessageProcessor extends MessageProcessor {
     private static final String TAG_TO_LISTEN_TO = "#freeunitaxi";
 
@@ -32,7 +32,7 @@ public class TwitterMessageProcessor extends MessageProcessor {
     private final Twitter twitter;
     private final TwitterMessageConverter twitterMessageConverter;
     private final TwitterStream twitterStream;
-    
+
     public static TwitterMessageProcessor getInstance() {
         return new TwitterMessageProcessor(
             new TwitterFactory().getInstance(),

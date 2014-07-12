@@ -20,27 +20,27 @@ public class OrderMessageListener implements IncomingMessageListener{
      */
 	@Override
 	public void onIncomingMessage(Message message) {
-			OrderManager manager = OrderManager.getInstance();
-			PassengerOrder order = new PassengerOrder();
-            order.setAmount(10);
-            order.setCreateTime(new Date());
-            Location location = new Location();
-            location.setName("");
-            location.setLongitude(message.getLocation().getLongitude());
-            location.setLatitude(message.getLocation().getLatitude());
-            Passenger passenger = new Passenger();
-            passenger.setInfo(message.getSender());
-            passenger.setLocation(location);
-            order.setPassenger(passenger);
-			order.setPassenger(passenger);
-            order.setIncoming(true);
-			manager.updateOrder(order);
-			/**
-             *  TODO in Message should be amount of order and Destination Location
-             *  TODO this features should be done by sandro dolidze
-             *  TODO Message should be parsed if message is not parsed correctly the message
-             *  TODO should be sent to operator in order not to loose order of client
-			 */
+        OrderManager manager = OrderManager.getInstance();
+        PassengerOrder order = new PassengerOrder();
+        order.setAmount(10);
+        order.setCreateTime(new Date());
+        Location location = new Location();
+        location.setName("");
+        location.setLongitude(message.getLocation().getLongitude());
+        location.setLatitude(message.getLocation().getLatitude());
+        Passenger passenger = new Passenger();
+        passenger.setInfo(message.getSender());
+        passenger.setLocation(location);
+        order.setPassenger(passenger);
+        order.setPassenger(passenger);
+        order.setIncoming(true);
+        manager.updateOrder(order);
+        /**
+         *  TODO in Message should be amount of order and Destination Location
+         *  TODO this features should be done by sandro dolidze
+         *  TODO Message should be parsed if message is not parsed correctly the message
+         *  TODO should be sent to operator in order not to loose order of client
+         */
 	}
 
 }
