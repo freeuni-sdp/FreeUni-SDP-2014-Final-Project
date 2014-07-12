@@ -203,4 +203,27 @@ public class OrderManager {
 
         logger.info("created passenger order without driver");
     }
+
+
+    /**
+     * ითვლის ოპერატორის საშუალო დატვირთვას
+     * გვიბრუნებს პერიოდში შემოსულ შეკვეთების რაოდენპბას
+     * @param startTime საწყისი დრო
+     * @param  endTime  დასასრულის დრო
+     * @return */
+    public long getOrderCount(Date startTime, Date endTime) {
+        Query query = em.createQuery("SELECT COUNT(o.id) FROM PassengerOrder o WHERE o.createTime > :startTime AND o.createTime < :endTime").setParameter("startTime", startTime).setParameter("endTime", endTime);
+        return Long.valueOf(query.getFirstResult());
+    }
+
+    /**
+     * ითვლის ტრანსაქციების საშუალო ხანგრძლივობას
+     * გვიბრუნებს ტრანსაქციების საშუალო ხანგრძლივობას წუთებში
+     * 
+     */
+    public double getAverageTransactionDuration(){
+        Query query = em.createQuery("SELECT SUM(o.duration) FROM PassengerOrder o");
+        Query count = em.createQuery("SELECT COUNT(o.id) FROM PassengerOrder o");
+        return (double) query.getFirstResult() / count.getFirstResult();
+    }
 }

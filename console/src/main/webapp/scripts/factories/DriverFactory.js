@@ -57,8 +57,7 @@
         },
 
         update: function(driver) {
-          return processDriversPromise($http.put('/api/drivers/' +
-              driver.name, driver));
+          $http.put('/api/drivers/' + driver.id, driver);
         },
 
         updateLocation: function(driverId, location) { // +
@@ -68,6 +67,10 @@
 
         add: function(driver) {
           return processDriversPromise($http.post('/api/drivers/', driver));
+        },
+
+        remove: function(id) {
+            $http.delete('/api/drivers/' + id);
         }
       };
     });
