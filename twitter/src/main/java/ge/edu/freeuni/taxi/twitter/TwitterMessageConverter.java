@@ -13,7 +13,7 @@ import twitter4j.Status;
  *
  * Small utility class used for converting twitter messages for message types and vice-versa
  *
- * format used for ordering taxi is - "#freeunitaxi order taxi, ${address}, ${fare}"
+ * format used for ordering taxi is - "#freeunitaxi order taxi, ${origin}, ${destination}, ${fare}"
  */
 public class TwitterMessageConverter {
 
@@ -85,6 +85,7 @@ public class TwitterMessageConverter {
             status.getId(),
             status.getUser().getScreenName(),
             getLocation(status.getGeoLocation()),
+            getOrigin(status.getText()),
             getDestination(status.getText()),
             getFare(status.getText())
         );
@@ -98,11 +99,15 @@ public class TwitterMessageConverter {
         }
     }
 
-    private String getDestination(String tweet) {
+    private String getOrigin(String tweet) {
         return tweet.split(", ")[1];
     }
 
+    private String getDestination(String tweet) {
+        return tweet.split(", ")[2];
+    }
+
     private double getFare(String tweet) {
-        return Double.parseDouble(tweet.split(", ")[2]);
+        return Double.parseDouble(tweet.split(", ")[3]);
     }
 }

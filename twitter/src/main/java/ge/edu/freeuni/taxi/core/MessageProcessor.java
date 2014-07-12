@@ -38,7 +38,7 @@ public abstract class MessageProcessor {
     }
 
     /**
-     * send message via processor and return sent message id
+     * send message via core and return sent message id
      */
     public abstract long sendOutgoingMessage(Message message);
 

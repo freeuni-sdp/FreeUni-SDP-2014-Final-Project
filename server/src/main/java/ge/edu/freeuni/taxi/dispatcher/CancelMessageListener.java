@@ -10,7 +10,6 @@ public class CancelMessageListener implements IncomingMessageListener{
 
 	@Override
 	public void onIncomingMessage(Message message) {
-
 		OrderManager orderManager = OrderManager.getInstance();
 		String passengerName = message.getSender();
 		PassengerOrder order = orderManager.getOrderByPassengerName(passengerName);

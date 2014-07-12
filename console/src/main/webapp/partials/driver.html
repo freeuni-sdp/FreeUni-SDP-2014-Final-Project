@@ -72,7 +72,7 @@
                                 <td class="nameC" align="middle"><input class="driverID" type="hidden" value="{{ driver.id }}" /><input class="form-control update_driver_name_input" type="text" spellcheck="false" autocomplete="off" value="{{ driver.name }}" /></td>
                                 <td class="incomeC" align="middle"><input class="form-control" type="text" spellcheck="false" autocomplete="off" value="{{ driver.income }}" /></td>
                                 <td class="editC" align="center" valign="middle"><button class="btn btn-primary" ng-click="updateDriver($event)">Edit</button></td>
-                                <td class="deleteC" align="center" valign="middle"><button class="btn btn-danger" ng-click="deleteDriver('{{ driver.id }}')">Delete</button></td>
+                                <td class="deleteC" align="center" valign="middle"><button class="btn btn-danger" ng-click="deleteDriver($event)">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>

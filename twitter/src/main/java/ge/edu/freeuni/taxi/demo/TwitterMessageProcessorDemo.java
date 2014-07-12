@@ -24,7 +24,7 @@ public class TwitterMessageProcessorDemo {
             }
         });
 
-        twitterMessageProcessor.sendOutgoingMessage(new Message(MessageType.CLIENT_CANCELED));
+        //twitterMessageProcessor.sendOutgoingMessage(new Message(MessageType.CLIENT_CANCELED));
     }
 
     public static void testMock() {
