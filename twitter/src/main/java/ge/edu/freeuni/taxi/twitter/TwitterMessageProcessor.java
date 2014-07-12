@@ -18,6 +18,7 @@ import twitter4j.StallWarning;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
 * @author Sandro Dolidze
@@ -34,9 +35,16 @@ public class TwitterMessageProcessor extends MessageProcessor {
     private final TwitterStream twitterStream;
 
     public static TwitterMessageProcessor getInstance() {
+        ConfigurationBuilder cb = new ConfigurationBuilder()
+            .setDebugEnabled(true)
+            .setOAuthConsumerKey("uDoPhuBiirlVF2iv4jQQsRdGf")
+            .setOAuthConsumerSecret("h91vj6DSNHxDVIlWgawtsOJiWavKClMtGgklDI6HIXxGRg3d7l")
+            .setOAuthAccessToken("2567184752-TrDVTX1jGnlZAdPKErYfWSYZxjEIvTdJvnv3J3r")
+            .setOAuthAccessTokenSecret("ZfTTPzKBqKz4EPxlF47PS7OBzqBMu5gCwGT2UxzFt6ykt");
+
         return new TwitterMessageProcessor(
             new TwitterFactory().getInstance(),
-            new TwitterStreamFactory().getInstance(),
+            new TwitterStreamFactory(cb.build()).getInstance(),
             new TwitterMessageConverter()
         );
     }
