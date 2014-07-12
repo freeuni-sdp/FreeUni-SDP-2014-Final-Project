@@ -2,45 +2,69 @@ package ge.edu.freeuni.taxi.dispatcher;
 
 import java.util.Date;
 
+import ge.edu.freeuni.taxi.core.Message;
+import ge.edu.freeuni.taxi.core.OrderMessage;
+
 import ge.edu.freeuni.taxi.Location;
 import ge.edu.freeuni.taxi.Passenger;
 import ge.edu.freeuni.taxi.PassengerOrder;
-import ge.edu.freeuni.taxi.core.Message;
+
 import ge.edu.freeuni.taxi.manager.OrderManager;
 
+/**
+ * @author - Giorgi Kochakidze, Sandro Dolidze
+ *
+ * this class is called  when user orders taxi from twitter
+ */
 public class OrderMessageListener implements IncomingMessageListener {
+    private final OrderManager orderManager = OrderManager.getInstance();
 
-
-    /**
-     * ტვიტერიდან შემოსული მესიჯი დამუშავდება და გაეგზავნება
-     * ოპერატორს რომელიც ამის შემდეგ გადაწყვეტს თვითონ
-     * მიამაგროს შეკვეთაზე მძღოლი, ტვიტერის საშუალებით მოხდეს
-     * არჩევა თუ რაციის მეშვეობით.
-     * @param message
-     */
 	@Override
 	public void onIncomingMessage(Message message) {
-        OrderManager manager = OrderManager.getInstance();
-        PassengerOrder order = new PassengerOrder();
-        order.setAmount(10);
-        order.setCreateTime(new Date());
-        Location location = new Location();
-        location.setName("");
-        location.setLongitude(message.getLocation().getLongitude());
-        location.setLatitude(message.getLocation().getLatitude());
-        Passenger passenger = new Passenger();
-        passenger.setInfo(message.getSender());
-        passenger.setLocation(location);
-        order.setPassenger(passenger);
-        order.setPassenger(passenger);
-        order.setIncoming(true);
-        manager.updateOrder(order);
-        /**
-         *  TODO in Message should be amount of order and Destination Location
-         *  TODO this features should be done by sandro dolidze
-         *  TODO Message should be parsed if message is not parsed correctly the message
-         *  TODO should be sent to operator in order not to loose order of client
-         */
+        OrderMessage orderMessage = (OrderMessage) message;
+        PassengerOrder order = getPassengerOrder(orderMessage);
+        orderManager.createOrderWithoutDriver(order);
 	}
 
+    private PassengerOrder getPassengerOrder(OrderMessage orderMessage) {
+        PassengerOrder order = new PassengerOrder();
+
+        order.setPassenger(getPassenger(orderMessage));
+        order.setAmount(orderMessage.getFare());
+        order.setCreateTime(new Date());
+        order.setDestination(getDestination(orderMessage));
+        order.setIncoming(true);
+
+        return order;
+    }
+
+    private Passenger getPassenger(OrderMessage orderMessage) {
+        Passenger passenger = new Passenger();
+
+        passenger.setInfo(orderMessage.getSender());
+        passenger.setLocation(getOrigin(orderMessage));
+
+        return passenger;
+    }
+
+    private Location getOrigin(OrderMessage orderMessage) {
+        Location location = new Location();
+
+        location.setName(orderMessage.getOrigin());
+
+        if (orderMessage.getLocation() != null) {
+            location.setLongitude(orderMessage.getLocation().getLongitude());
+            location.setLatitude(orderMessage.getLocation().getLatitude());
+        }
+
+        return location;
+    }
+
+    private Location getDestination(OrderMessage orderMessage) {
+        Location location = new Location();
+
+        location.setName(orderMessage.getDestination());
+
+        return location;
+    }
 }
