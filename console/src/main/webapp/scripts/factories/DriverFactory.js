@@ -58,7 +58,7 @@
 
         update: function(driver) {
           return processDriversPromise($http.put('/api/drivers/' +
-              driver.name, driver));
+              driver.id, driver));
         },
 
         updateLocation: function(driverId, location) { // +

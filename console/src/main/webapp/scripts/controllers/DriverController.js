@@ -16,7 +16,7 @@
 
           $scope.driverForm = {name: ''};
           DriverFactory.getDrivers().then(function(res) {
-              $scope.drivers = res.data;
+             $scope.drivers = res.data;
           });
 
           $scope.addDriver = function() {
@@ -27,8 +27,19 @@
             });
           };
 
-          $scope.updateDriver = function() {
-
+          $scope.updateDriver = function(event) {
+            var element = angular.element(event.srcElement);
+            var id = $(element).parent().parent().find('.driverID').val();
+            var name = $(element).parent().parent().find('.update_driver_name_input').val();
+            var editDriver = undefined;
+            $scope.drivers.forEach(function(driver) {
+                if (driver.id == id)
+                    editDriver = driver;
+            });
+            editDriver.name = name;
+            DriverFactory.update(editDriver).then(function(res) {
+                console.log(res);
+            });
           };
     });
 })();
