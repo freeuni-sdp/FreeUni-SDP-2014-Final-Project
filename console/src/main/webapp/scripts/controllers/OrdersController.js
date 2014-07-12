@@ -8,7 +8,8 @@
 
   angular.module('freeUniTaxiApp')
     .controller('OrdersController', function($scope, OrderFactory,
-      DriverFactory, OrderValidationService, LocationValidationService) {
+      DriverFactory, OrderValidationService, LocationValidationService,
+      MoneyValidationService) {
 
       function IncorrectInputException() {}
 
@@ -139,6 +140,11 @@
 
         if (!LocationValidationService.validate(form.destination)) {
           alert('Incorrect destination');
+          throw new IncorrectInputException();
+        }
+
+        if (!MoneyValidationService.validate(form.amount)) {
+          alert('Incorrect money amount');
           throw new IncorrectInputException();
         }
 
