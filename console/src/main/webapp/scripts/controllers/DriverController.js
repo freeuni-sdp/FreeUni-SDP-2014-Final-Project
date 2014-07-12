@@ -41,5 +41,11 @@
                 console.log(res);
             });
           };
+
+          $scope.deleteDriver = function(id) {
+            DriverFactory.remove(id).then(function() {
+               console.log('deleted ' + id);
+            });
+          };
     });
 })();

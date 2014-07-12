@@ -68,6 +68,10 @@
 
         add: function(driver) {
           return processDriversPromise($http.post('/api/drivers/', driver));
+        },
+
+        remove: function(id) {
+            return processDriversPromise($http.delete('/api/drivers/', id));
         }
       };
     });
